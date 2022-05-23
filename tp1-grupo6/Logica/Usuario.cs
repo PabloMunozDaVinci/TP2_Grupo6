@@ -6,6 +6,8 @@ namespace tp1_grupo6.Logica
 {
      public class Usuario
     {
+
+        //testttt
         public int ID { get; set; }
 
         public int DNI { get; set; }
