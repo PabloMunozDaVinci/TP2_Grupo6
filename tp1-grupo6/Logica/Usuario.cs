@@ -8,6 +8,8 @@ namespace tp1_grupo6.Logica
     {
 
         //testttt
+
+        //test2 
         public int ID { get; set; }
 
         public int DNI { get; set; }
