@@ -22,7 +22,7 @@ namespace tp1_grupo6.Logica
 
 		public Post()
 		{ }
-		//AASDLKAJDLASKDJALKDJALDKJ
+		
 		public Post(int ID,int usuarioID,int comentarioID, string Contenido,string fecha){
 			this.ID = ID;
 			this.usuarioID = usuarioID;
@@ -31,7 +31,7 @@ namespace tp1_grupo6.Logica
 			this.Fecha = fecha;
 		
 		}
-		public Post(int ID, Usuario usuario, string Contenido, List<Comentario> Comentarios, List<Reaccion> Reacciones, List<Tag> Tags, DateTime Fecha)
+		public Post(int ID, Usuario usuario, string Contenido, List<Comentario> Comentarios, List<Reaccion> Reacciones, List<Tag> Tags, string Fecha)
 		{
 			this.ID = ID;
 			this.usuario = usuario;
