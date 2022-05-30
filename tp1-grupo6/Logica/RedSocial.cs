@@ -18,6 +18,10 @@ namespace tp1_grupo6.Logica
 
         public Usuario usuarioActual { get; set; }
 
+        public IDictionary<string, int> loginHistory;
+
+        private const int cantMaxIntentos = 3;
+
         public RedSocial()
         {
             usuarios = new List<Usuario>();
@@ -25,16 +29,16 @@ namespace tp1_grupo6.Logica
             tags = new List<Tag>();
             this.usuarioActual = usuarioActual;
             this.IdUsuarios = 0;
+            this.loginHistory = new Dictionary<string, int>();
         }
-       
+
         public bool RegistrarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password)
         {
-            if (!existeUsuario(Mail))
+            if (!ExisteUsuario(Mail))
             {
                 try
                 {
-                    string passwordHash = SHA.ComputeSHA256Hash(Password);
-                    Usuario usuario = new Usuario(DNI, Nombre, Apellido, Mail, passwordHash);
+                    Usuario usuario = new Usuario(DNI, Nombre, Apellido, Mail, this.Hashear(Password));
                     usuarios.Add(usuario);
                     return true;
                 }
@@ -46,46 +50,63 @@ namespace tp1_grupo6.Logica
             return false;
         }
 
+        private string Hashear(string contraseñaSinHashear)
+        {
+            try
+            {
+                string passwordHash = SHA.ComputeSHA256Hash(contraseñaSinHashear);
+                return passwordHash;
+            }
+            catch (Exception)
+            {
+                return "error";
+            }
+        }
+
+        public string Intentos(string usuarioIngresado)
+        {
+            string mensaje = null;
+            if (loginHistory.TryGetValue(usuarioIngresado, out int value))
+            {
+                loginHistory[usuarioIngresado] = loginHistory[usuarioIngresado] + 1;
+                mensaje = "Datos incorrectos, intento " + loginHistory[usuarioIngresado] + "/3";
+                if (loginHistory[usuarioIngresado] == cantMaxIntentos)
+                {
+                    this.bloquearDesbloquearUsuario(usuarioIngresado, true);
+                    mensaje = "Intento 3/3, usuario bloqueado.";
+                }
+            }
+            else
+            {
+                mensaje = "Datos incorrectos, intento 1/3";
+                loginHistory.Add(usuarioIngresado, 1);
+            }
+            return mensaje;
+        }
 
 
-
-
-
-
-
-
-
-
-
-
+        public bool EstaBloqueado(string Mail)
+        {
+            return DevolverUsuario(Mail).Bloqueado;
+        }
 
 
         //Falta probar
         public void ModificarUsuario(int newID, string newNombre, string newApellido, string newMail, string newPassword)
         {
-            
+
             if (usuarioActual != null && usuarioActual.ID == newID)
             {
 
 
                 usuarioActual.Nombre = newNombre;
                 usuarioActual.Apellido = newApellido;
-                usuarioActual.Mail=newMail;
-                usuarioActual.Password=newPassword;
+                usuarioActual.Mail = newMail;
+                usuarioActual.Password = newPassword;
 
 
             }
         }
-
-
-
-
-
-
-
-
-
-
 
         //no se si funciona
         public void EliminarUsuario(Usuario u, string Mail)
@@ -103,42 +124,42 @@ namespace tp1_grupo6.Logica
 
 
         // Devuelve el Usuario correspondiente al Mail recibido.
-        public Usuario devolverUsuario(string Mail)
+        private Usuario DevolverUsuario(string Mail)
         {
+            int a = 0;
+            Usuario usuarioEncontrado = null;
+
             if (usuarios.Count() > 0)
             {
-                foreach (Usuario usuario in usuarios)
+                while (usuarios.Count() >= a || usuarioEncontrado == null)
                 {
-                    if (usuario.Mail == Mail)
+                    if (usuarios[a].Mail == Mail)
                     {
-                        return usuario;
+                        usuarioEncontrado = usuarios[a];
                     }
+                    a++;
                 }
             }
-            return null;
+            return usuarioEncontrado;
         }
         // Se autentica al Usuario.
         public bool IniciarUsuario(string Mail, string Password)
         {
-            foreach (Usuario usuario in usuarios)
+            bool ok = false;
+            Usuario usuario = this.DevolverUsuario(Mail);
+            if (usuario.Password == this.Hashear(Password))
             {
-                if (usuario.Mail == Mail && usuario.Password == Password)
-                {
-                    usuarioActual = usuario;
-                    return true;
-                }
+                usuarioActual = usuario;
+                ok = true;
             }
-            return false;
+            return ok;
         }
         // Se valida si el usuario existe y devuelve true o false
-        public bool existeUsuario(string Mail)
+        public bool ExisteUsuario(string Mail)
         {
-            foreach (Usuario usuario in usuarios)
+            if (DevolverUsuario(Mail) != null)
             {
-                if (usuario.Mail == Mail)
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }
@@ -187,7 +208,7 @@ namespace tp1_grupo6.Logica
         public bool CerrarSesion(Usuario u)
         {
             //Pregunto si existe usuario Actual
-            if (usuarioActual != null) 
+            if (usuarioActual != null)
             {
                 //seteo el usuario actual a null
                 usuarioActual = null;
@@ -385,27 +406,27 @@ namespace tp1_grupo6.Logica
         // no funciona
         public void ModificarComentario(Post p, Comentario c)
         {
-                if (posts.Count > 0)
+            if (posts.Count > 0)
+            {
+                bool encontre = false;
+                //registro el ID del post a guardar
+                int id = 0;
+                id = p.ID;
+                foreach (Post postAux in posts)
                 {
-                    bool encontre = false;
-                    //registro el ID del post a guardar
-                    int id = 0;
-                    id = p.ID;
-                    foreach (Post postAux in posts)
+                    if (postAux.ID == id)
                     {
-                        if (postAux.ID == id)
-                        {
-                            encontre = true;
-                            //remuevo el ultimo comentario dentro del pool de comentarios del usuario actual
-                            //usuarioActual.MisComentarios.Remove(usuarioActual.MisComentarios.Last());
-                            //remuevo el ultimo Post dentro del pool de Posts 
-                            //postAux.Comentarios.Remove(postAux.Comentarios.Last());
-                            //al usuario actual le agrego a su lista el comentario que realizó
-                            postAux.Comentarios.Add(c);
-                        }
+                        encontre = true;
+                        //remuevo el ultimo comentario dentro del pool de comentarios del usuario actual
+                        //usuarioActual.MisComentarios.Remove(usuarioActual.MisComentarios.Last());
+                        //remuevo el ultimo Post dentro del pool de Posts 
+                        //postAux.Comentarios.Remove(postAux.Comentarios.Last());
+                        //al usuario actual le agrego a su lista el comentario que realizó
+                        postAux.Comentarios.Add(c);
                     }
                 }
-         }
+            }
+        }
 
 
 
@@ -451,7 +472,7 @@ namespace tp1_grupo6.Logica
 
 
                             //remuevo el ultimo Post dentro del pool de Posts 
-                           // postAux.Comentarios.Remove(postAux.Comentarios.Last());
+                            // postAux.Comentarios.Remove(postAux.Comentarios.Last());
                         }
 
                     }
