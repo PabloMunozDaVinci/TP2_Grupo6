@@ -70,7 +70,7 @@ namespace tp1_grupo6.Front
                 MessageBox.Show("Ingrese Mail");
                 todoOk = false;
             }
-            else if (miRed.existeUsuario(mail))
+            else if (miRed.ExisteUsuario(mail))
             {
                 MessageBox.Show("El Mail ingresado ya pertenece a un Usuario existente.");
                 textBoxMail.Text = "";
@@ -84,7 +84,7 @@ namespace tp1_grupo6.Front
                 todoOk = false;
             }
 
-  
+
             if (password == "")
             {
                 MessageBox.Show("Ingrese Contraseña");
