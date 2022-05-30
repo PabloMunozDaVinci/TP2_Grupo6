@@ -84,7 +84,7 @@ namespace tp1_grupo6.Front
                 todoOk = false;
             }
 
-  
+
             if (password == "")
             {
                 MessageBox.Show("Ingrese Contraseña");

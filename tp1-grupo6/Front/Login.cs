@@ -25,11 +25,11 @@ namespace tp1_grupo6
         public Login(string[] args)
         {
             miRed = new RedSocial();
-            
+
             InitializeComponent();
             argumentos = args;
         }
-        
+
         private void label3_Click(object sender, EventArgs e)
         {
 
@@ -51,7 +51,7 @@ namespace tp1_grupo6
                         Form formIndex = new Front.Index(this.miRed, this.usuario);
                         textUsuario.Text = "";
                         textContrasenia.Text = "";
-                        loginHistory.Clear();
+                        miRed.loginHistory.Clear();
                         this.Hide();
                         formIndex.ShowDialog();
                         this.Show();
@@ -71,7 +71,7 @@ namespace tp1_grupo6
             {
                 labelIntentos.Text = "Usuario inexistente";
             }
-        }   
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -83,7 +83,7 @@ namespace tp1_grupo6
             Form registrarse = new Registrar(this.miRed);
             textUsuario.Text = "";
             textContrasenia.Text = "";
-            loginHistory.Clear();
+            miRed.loginHistory.Clear();
             this.Hide();
             registrarse.ShowDialog();
             this.Show();
