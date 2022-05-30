@@ -15,13 +15,11 @@ namespace tp1_grupo6
 {
     public partial class Login : Form
     {
-        private const int cantMaxIntentos = 3;
         public RedSocial miRed;
         private Usuario usuario;
         public string usuarioIngresado;
         public string contraseniaIngresada;
         public bool loginOk;
-        public IDictionary<string, int> loginHistory = new Dictionary<string, int>();
         private string[] argumentos;
 
         public Login(string[] args)

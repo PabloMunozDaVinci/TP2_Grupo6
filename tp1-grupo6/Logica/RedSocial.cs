@@ -9,17 +9,11 @@ namespace tp1_grupo6.Logica
     public class RedSocial
     {
         private List<Usuario> usuarios;
-
         private int IdUsuarios;
-
         private List<Post> posts;
-
         private List<Tag> tags;
-
         public Usuario usuarioActual { get; set; }
-
         public IDictionary<string, int> loginHistory;
-
         private const int cantMaxIntentos = 3;
 
         public RedSocial()
