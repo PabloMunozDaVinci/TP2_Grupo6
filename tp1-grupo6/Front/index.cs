@@ -64,5 +64,10 @@ namespace tp1_grupo6.Front
         {
 
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

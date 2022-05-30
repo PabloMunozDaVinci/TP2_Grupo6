@@ -57,15 +57,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-	<assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-	<data name="pictureBox3.ErrorImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="pictureBox3.ErrorImage" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox3.Location" type="System.Drawing.Point, System.Drawing">
     <value>173, 27</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="pictureBox3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
@@ -95,13 +94,13 @@
     <value>NoControl</value>
   </data>
   <data name="button3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>300, 220</value>
+    <value>290, 187</value>
   </data>
   <data name="button3.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 33</value>
   </data>
   <data name="button3.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>33</value>
   </data>
   <data name="button3.Text" xml:space="preserve">
     <value>Modificar</value>
@@ -113,7 +112,7 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;button3.Parent" xml:space="preserve">
-    <value>panel7</value>
+    <value>panel8</value>
   </data>
   <data name="&gt;&gt;button3.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -122,13 +121,13 @@
     <value>NoControl</value>
   </data>
   <data name="button10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>207, 220</value>
+    <value>197, 187</value>
   </data>
   <data name="button10.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 33</value>
   </data>
   <data name="button10.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>32</value>
   </data>
   <data name="button10.Text" xml:space="preserve">
     <value>Eliminar</value>
@@ -140,7 +139,7 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;button10.Parent" xml:space="preserve">
-    <value>panel7</value>
+    <value>panel8</value>
   </data>
   <data name="&gt;&gt;button10.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -149,13 +148,13 @@
     <value>NoControl</value>
   </data>
   <data name="button14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 220</value>
+    <value>11, 187</value>
   </data>
   <data name="button14.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 33</value>
   </data>
   <data name="button14.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>31</value>
   </data>
   <data name="button14.Text" xml:space="preserve">
     <value>Comentar</value>
@@ -167,7 +166,7 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;button14.Parent" xml:space="preserve">
-    <value>panel7</value>
+    <value>panel8</value>
   </data>
   <data name="&gt;&gt;button14.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -176,13 +175,13 @@
     <value>NoControl</value>
   </data>
   <data name="button13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 220</value>
+    <value>104, 187</value>
   </data>
   <data name="button13.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 33</value>
   </data>
   <data name="button13.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>30</value>
   </data>
   <data name="button13.Text" xml:space="preserve">
     <value>Reacción</value>
@@ -194,19 +193,22 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;button13.Parent" xml:space="preserve">
-    <value>panel7</value>
+    <value>panel8</value>
   </data>
   <data name="&gt;&gt;button13.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="button12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="button12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 319</value>
+    <value>100, 314</value>
   </data>
   <data name="button12.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 33</value>
   </data>
   <data name="button12.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>29</value>
   </data>
   <data name="button12.Text" xml:space="preserve">
     <value>Quitar</value>
@@ -218,19 +220,22 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;button12.Parent" xml:space="preserve">
-    <value>panel7</value>
+    <value>panel8</value>
   </data>
   <data name="&gt;&gt;button12.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="button11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="button11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 319</value>
+    <value>7, 314</value>
   </data>
   <data name="button11.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 33</value>
   </data>
   <data name="button11.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>28</value>
   </data>
   <data name="button11.Text" xml:space="preserve">
     <value>Modificar</value>
@@ -242,19 +247,19 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;button11.Parent" xml:space="preserve">
-    <value>panel7</value>
+    <value>panel8</value>
   </data>
   <data name="&gt;&gt;button11.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="listView3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 259</value>
+    <value>0, 226</value>
   </data>
   <data name="listView3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>702, 54</value>
+    <value>702, 82</value>
   </data>
   <data name="listView3.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>27</value>
   </data>
   <data name="&gt;&gt;listView3.Name" xml:space="preserve">
     <value>listView3</value>
@@ -263,19 +268,19 @@
     <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;listView3.Parent" xml:space="preserve">
-    <value>panel7</value>
+    <value>panel8</value>
   </data>
   <data name="&gt;&gt;listView3.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
   <data name="listView2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 121</value>
+    <value>0, 37</value>
   </data>
   <data name="listView2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>702, 241</value>
+    <value>702, 326</value>
   </data>
   <data name="listView2.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>26</value>
   </data>
   <data name="&gt;&gt;listView2.Name" xml:space="preserve">
     <value>listView2</value>
@@ -284,10 +289,31 @@
     <value>System.Windows.Forms.ListView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;listView2.Parent" xml:space="preserve">
-    <value>panel7</value>
+    <value>panel8</value>
   </data>
   <data name="&gt;&gt;listView2.ZOrder" xml:space="preserve">
     <value>7</value>
+  </data>
+  <data name="panel8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 72</value>
+  </data>
+  <data name="panel8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>702, 401</value>
+  </data>
+  <data name="panel8.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;panel8.Name" xml:space="preserve">
+    <value>panel8</value>
+  </data>
+  <data name="&gt;&gt;panel8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel8.Parent" xml:space="preserve">
+    <value>panel7</value>
+  </data>
+  <data name="&gt;&gt;panel8.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="textBox2.Location" type="System.Drawing.Point, System.Drawing">
     <value>145, 25</value>
@@ -308,7 +334,7 @@
     <value>panel7</value>
   </data>
   <data name="&gt;&gt;textBox2.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>1</value>
   </data>
   <data name="button7.Location" type="System.Drawing.Point, System.Drawing">
     <value>21, 22</value>
@@ -332,7 +358,7 @@
     <value>panel7</value>
   </data>
   <data name="&gt;&gt;button7.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>2</value>
   </data>
   <data name="panel7.Location" type="System.Drawing.Point, System.Drawing">
     <value>461, 301</value>
@@ -383,7 +409,7 @@
     <value>NoControl</value>
   </data>
   <data name="button8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>207, 92</value>
+    <value>191, 92</value>
   </data>
   <data name="button8.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 26</value>
