@@ -9,7 +9,6 @@ namespace tp1_grupo6.Logica
     public class RedSocial
     {
         private List<Usuario> usuarios;
-        private int IdUsuarios;
         private List<Post> posts;
         private List<Tag> tags;
         public Usuario usuarioActual { get; set; }
@@ -22,7 +21,6 @@ namespace tp1_grupo6.Logica
             posts = new List<Post>();
             tags = new List<Tag>();
             this.usuarioActual = usuarioActual;
-            this.IdUsuarios = 0;
             this.loginHistory = new Dictionary<string, int>();
         }
 
