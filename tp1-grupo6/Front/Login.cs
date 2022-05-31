@@ -15,23 +15,21 @@ namespace tp1_grupo6
 {
     public partial class Login : Form
     {
-        private const int cantMaxIntentos = 3;
         public RedSocial miRed;
         private Usuario usuario;
         public string usuarioIngresado;
         public string contraseniaIngresada;
         public bool loginOk;
-        public IDictionary<string, int> loginHistory = new Dictionary<string, int>();
         private string[] argumentos;
 
         public Login(string[] args)
         {
             miRed = new RedSocial();
-            
+
             InitializeComponent();
             argumentos = args;
         }
-        
+
         private void label3_Click(object sender, EventArgs e)
         {
 
@@ -42,53 +40,36 @@ namespace tp1_grupo6
             labelIntentos.Text = "";
             usuarioIngresado = textUsuario.Text;
             contraseniaIngresada = textContrasenia.Text;
-            usuario = miRed.devolverUsuario(usuarioIngresado);
-
-            if (usuario != null)
+            if (miRed.ExisteUsuario(usuarioIngresado))
             {
-                string contraseniaIngresadaHash = SHA.ComputeSHA256Hash(contraseniaIngresada);
-                loginOk = miRed.IniciarUsuario(usuarioIngresado, contraseniaIngresadaHash);
-                if (loginOk)
+                if (!miRed.EstaBloqueado(usuarioIngresado))
                 {
-                    if (!usuario.Bloqueado)
+                    loginOk = miRed.IniciarUsuario(usuarioIngresado, contraseniaIngresada);
+                    if (loginOk)
                     {
-                            argumentos[0] = "user";
-                            Form formIndex = new Front.Index(this.miRed, this.usuario);
-                            textUsuario.Text = "";
-                            textContrasenia.Text = "";
-                            loginHistory.Clear();
-                            this.Hide();
-                            formIndex.ShowDialog();
-                            this.Show();
-                        
+                        argumentos[0] = "user";
+                        Form formIndex = new Front.Index(this.miRed, this.usuario);
+                        textUsuario.Text = "";
+                        textContrasenia.Text = "";
+                        miRed.loginHistory.Clear();
+                        this.Hide();
+                        formIndex.ShowDialog();
+                        this.Show();
                     }
                     else
                     {
-                        labelIntentos.Text = "Su usuario está bloqueado.";
+                        labelIntentos.Text = miRed.Intentos(usuarioIngresado);
                     }
+
                 }
                 else
                 {
-                    if (loginHistory.TryGetValue(usuarioIngresado, out int value))
-                    {
-                        loginHistory[usuarioIngresado] = loginHistory[usuarioIngresado] + 1;
-                        labelIntentos.Text = "Datos incorrectos, intento " + loginHistory[usuarioIngresado] + "/3";
-                        if (loginHistory[usuarioIngresado] == cantMaxIntentos)
-                        {
-                            miRed.bloquearDesbloquearUsuario(usuario.Mail, true);
-                            labelIntentos.Text = "Intento 3/3, usuario bloqueado.";
-                        }
-                    }
-                    else
-                    {
-                        labelIntentos.Text = "Datos incorrectos, intento 1/3";
-                        loginHistory.Add(usuarioIngresado, 1);
-                    }
+                    labelIntentos.Text = "Su usuario está bloqueado";
                 }
             }
             else
             {
-                labelIntentos.Text =  "Usuario inexistente";
+                labelIntentos.Text = "Usuario inexistente";
             }
         }
 
@@ -102,7 +83,7 @@ namespace tp1_grupo6
             Form registrarse = new Registrar(this.miRed);
             textUsuario.Text = "";
             textContrasenia.Text = "";
-            loginHistory.Clear();
+            miRed.loginHistory.Clear();
             this.Hide();
             registrarse.ShowDialog();
             this.Show();
