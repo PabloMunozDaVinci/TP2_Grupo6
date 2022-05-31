@@ -324,16 +324,16 @@ namespace tp1_grupo6.Logica
 
 
         //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int eliminarUsuario(int Id)
+        public int eliminarUsuario(int id)
         {
             string connectionString = Properties.Resources.connectionString;
-            string queryDelete = "DELETE FROM [dbo].[Usuario] WHERE ID=@id";
+            string queryDelete = "DELETE FROM [dbo].[Usuario] WHERE UsuarioID=@id";
             using (SqlConnection connectionDB =
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryDelete, connectionDB);
                 command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                command.Parameters["@id"].Value = Id;
+                command.Parameters["@id"].Value = id;
                 try
                 {
                     connectionDB.Open();
@@ -361,22 +361,21 @@ namespace tp1_grupo6.Logica
 
 
         //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int modificarUsuario(int Id, int Dni, string Nombre,string Apellido, string Mail, string Password, bool EsADM,int intentosFallidos, bool Bloqueado)
+        public int modificarUsuario(int Id, int Dni, string Nombre,string Apellido, string Mail, string Password, bool EsADMIN, bool Bloqueado)
         {
             string connectionString = Properties.Resources.connectionString;
-            string queryUpdateUsuario = "UPDATE [dbo].[Usuario] SET Nombre=@nombre,Apellido=@apellido, Mail=@mail,Password=@password, EsADMIN=@esadm,IntentosFallidos=@intentosfallidos ,Bloqueado=@bloqueado WHERE ID=@id;";
+            string queryUpdateUsuario = "UPDATE [dbo].[Usuario] SET Nombre=@nombre,Apellido=@apellido, Mail=@mail,Password=@password, EsADMIN=@esadm ,Bloqueado=@bloqueado WHERE ID=@id;";
             using (SqlConnection connectionDB =
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryUpdateUsuario, connectionDB);
                 command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar));
                 command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
-                command.Parameters.Add(new SqlParameter("@intentosFallidos", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
                 command.Parameters["@id"].Value = Id;
                 command.Parameters["@dni"].Value = Dni;
@@ -384,8 +383,7 @@ namespace tp1_grupo6.Logica
                 command.Parameters["@apellido"].Value = Apellido;
                 command.Parameters["@mail"].Value = Mail;
                 command.Parameters["@password"].Value = Password;
-                command.Parameters["@esadm"].Value = EsADM;
-                command.Parameters["@intentosfallidos"].Value = intentosFallidos;
+                command.Parameters["@esadm"].Value = EsADMIN;
                 command.Parameters["@bloqueado"].Value = Bloqueado;
                 try
                 {
