@@ -131,8 +131,7 @@ namespace tp1_grupo6.Logica
         {
             if (!ExisteUsuario(Mail))
             {
-                try
-                {
+    
                     int idNuevoUsuario;
                     idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, EsADMIN, Bloqueado);
                     if (idNuevoUsuario != -1)
@@ -147,11 +146,7 @@ namespace tp1_grupo6.Logica
                         //algo salió mal con la query porque no generó un id válido
                         return false;
                     }
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                
             }
             return false;
         }
