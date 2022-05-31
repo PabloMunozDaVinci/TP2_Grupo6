@@ -159,7 +159,7 @@ namespace tp1_grupo6.Logica
         {
             bool ok = false;
             Usuario usuario = this.DevolverUsuario(Mail);
-            if (usuario.Password == this.Hashear(Password))
+            if (usuario.Password == Password)
             {
                 usuarioActual = usuario;
                 ok = true;
