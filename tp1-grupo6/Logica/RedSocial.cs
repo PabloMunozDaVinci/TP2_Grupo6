@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EasyEncryption;
+using System.Data.SqlClient;
 
 namespace tp1_grupo6.Logica
 {
@@ -14,6 +15,7 @@ namespace tp1_grupo6.Logica
         public Usuario usuarioActual { get; set; }
         public IDictionary<string, int> loginHistory;
         private const int cantMaxIntentos = 3;
+        private DB_Management DB;
 
         public RedSocial()
         {
@@ -22,25 +24,15 @@ namespace tp1_grupo6.Logica
             tags = new List<Tag>();
             this.usuarioActual = usuarioActual;
             this.loginHistory = new Dictionary<string, int>();
+            DB = new DB_Management();
+            inicializarAtributos();
         }
 
-        public bool RegistrarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password)
+        private void inicializarAtributos()
         {
-            if (!ExisteUsuario(Mail))
-            {
-                try
-                {
-                    Usuario usuario = new Usuario(DNI, Nombre, Apellido, Mail, this.Hashear(Password));
-                    usuarios.Add(usuario);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }
-            return false;
+            usuarios = DB.inicializarUsuarios();
         }
+
 
         private string Hashear(string contraseñaSinHashear)
         {
@@ -134,6 +126,37 @@ namespace tp1_grupo6.Logica
             }
             return usuarioEncontrado;
         }
+
+        public bool RegistrarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, bool EsADMIN, bool Bloqueado)
+        {
+            if (!ExisteUsuario(Mail))
+            {
+                try
+                {
+                    int idNuevoUsuario;
+                    idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, EsADMIN, Bloqueado);
+                    if (idNuevoUsuario != -1)
+                    {
+                        //Ahora sí lo agrego en la lista
+                        Usuario nuevo = new Usuario(idNuevoUsuario, DNI, Nombre, Apellido, Mail, this.Hashear(Password), EsADMIN, Bloqueado);
+                        usuarios.Add(nuevo);
+                        return true;
+                    }
+                    else
+                    {
+                        //algo salió mal con la query porque no generó un id válido
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+
         // Se autentica al Usuario.
         public bool IniciarUsuario(string Mail, string Password)
         {
@@ -319,7 +342,7 @@ namespace tp1_grupo6.Logica
                     post.Comentarios = pComentarios;
                     post.Reacciones = pReacciones;
                     post.Tags = pTags;
-                    post.Fecha = pFecha;
+                    //post.Fecha = pFecha;
 
                 }
             }
