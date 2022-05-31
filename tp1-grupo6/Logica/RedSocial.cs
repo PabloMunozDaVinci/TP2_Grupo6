@@ -33,7 +33,6 @@ namespace tp1_grupo6.Logica
             usuarios = DB.inicializarUsuarios();
         }
 
-
         private string Hashear(string contraseñaSinHashear)
         {
             try
@@ -68,14 +67,12 @@ namespace tp1_grupo6.Logica
             return mensaje;
         }
 
-
         public bool EstaBloqueado(string Mail)
         {
             return DevolverUsuario(Mail).Bloqueado;
         }
 
-
-        //Falta probar
+        //Falta
         public void ModificarUsuario(int newID, string newNombre, string newApellido, string newMail, string newPassword)
         {
 
@@ -104,16 +101,20 @@ namespace tp1_grupo6.Logica
             }
         }
 
-
-
-
         // Devuelve el Usuario correspondiente al Mail recibido.
         private Usuario DevolverUsuario(string Mail)
         {
-            int a = 0;
             Usuario usuarioEncontrado = null;
 
-            if (usuarios.Count() > 0)
+            for (int i = 0; i < usuarios.Count(); i++)
+            {
+                if (usuarios[i].Mail == Mail)
+                {
+                    usuarioEncontrado = usuarios[i];
+                }
+            }
+
+            /*if (usuarios.Count() > 0)
             {
                 while (usuarios.Count() >= a || usuarioEncontrado == null)
                 {
@@ -123,7 +124,8 @@ namespace tp1_grupo6.Logica
                     }
                     a++;
                 }
-            }
+            }*/
+
             return usuarioEncontrado;
         }
 
