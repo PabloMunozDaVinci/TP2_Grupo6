@@ -45,7 +45,7 @@ namespace tp1_grupo6.Logica
                     //mientras haya registros/filas en mi DataReader, sigo leyendo
                     while (reader.Read())
                     {
-                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetBoolean(5), reader.GetBoolean(6));
+                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetBoolean(6), reader.GetBoolean(7));
                         misUsuarios.Add(aux);
                     }
                     //En este punto ya recorrí todas las filas del resultado de la query
@@ -135,7 +135,7 @@ namespace tp1_grupo6.Logica
                     while (reader.Read())
                     {
                         // revisar como agregar un usuario ya que tenemos lista de usuario , como linkear eso
-                        auxP = new Post(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4));
+                        auxP = new Post(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetDateTime(3));
                         misPost.Add(auxP);
 
                     }
@@ -152,16 +152,6 @@ namespace tp1_grupo6.Logica
             }
             return misPost;
         }
-
-
-
-
-
-
-
-
-
-
 
         public List<Tag> inicializarTag()
         {
@@ -257,33 +247,31 @@ namespace tp1_grupo6.Logica
 
         //------------------Inicia querys de insert---------------------------------------------------------//
         //devuelve el ID del usuario agregado a la base, si algo falla devuelve -1
-        public int agregarUsuario(int Dni, string Nombre, string Apellido,string Mail, string Password, bool EsADM,int IntentosFallidos ,bool Bloqueado)
+        public int agregarUsuario(int Dni, string Nombre, string Apellido, string Mail, string Password, bool EsADMIN ,bool Bloqueado)
         {
             //primero me aseguro que lo pueda agregar a la base
             int resultadoQuery;
             int idNuevoUsuario = -1;
             string connectionString = Properties.Resources.connectionString;
-            string queryInsertUsuarios = "INSERT INTO [dbo].[Usuario] ([DNI],[Nombre],[Apellido],[Mail],[Password],[EsADMIN],[IntentosFallidos],[Bloqueado]) VALUES (@dni,@nombre,@apellido,@mail,@password,@esadm,@intentosFallidos,@bloqueado);";
+            string queryInsertUsuarios = "INSERT INTO [dbo].[Usuario] ([DNI],[Nombre],[Apellido],[Mail],[Password],[EsADMIN],[Bloqueado]) VALUES (@dni,@nombre,@apellido,@mail,@password,@esadmin,@bloqueado);";
             using (SqlConnection connectionDB =
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryInsertUsuarios, connectionDB);
 
-                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
-                command.Parameters.Add(new SqlParameter("@intentosFallidos", SqlDbType.Int)); 
-                command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
+                command.Parameters.Add(new SqlParameter("@DNI", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@Nombre", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@Apellido", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@Mail", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@Password", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@esADMIN", SqlDbType.Bit));
+                command.Parameters.Add(new SqlParameter("@Bloqueado", SqlDbType.Bit));
                 command.Parameters["@dni"].Value = Dni;
                 command.Parameters["@nombre"].Value = Nombre;
                 command.Parameters["@apellido"].Value = Apellido;
                 command.Parameters["@mail"].Value = Mail;
                 command.Parameters["@password"].Value = Password;
-                command.Parameters["@esadm"].Value = EsADM;
-                command.Parameters["@intentosFallidos"].Value = IntentosFallidos;
+                command.Parameters["@esadmin"].Value = EsADMIN;
                 command.Parameters["@bloqueado"].Value = Bloqueado;
                 try
                 {
@@ -310,7 +298,52 @@ namespace tp1_grupo6.Logica
         }
 
 
+        public int agregarPost(int usuarioid ,string contenido) {
 
+            int resultadoQuery;
+            int idNuevoPost = -1;
+
+
+            string connectionString = Properties.Resources.connectionString;
+            string queryInsertPost = "INSERT INTO [dbo].[Post] ([UsuarioID],[Contenido],[Fecha]) VALUES (@usuarioid,@contenido,GETDATE());";
+
+            using (SqlConnection connectionDB =
+             new SqlConnection(connectionString)) {
+
+                SqlCommand command = new SqlCommand(queryInsertPost, connectionDB);
+
+                command.Parameters.Add(new SqlParameter("@UsuarioID", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@Contenido", SqlDbType.VarChar));
+            
+
+                command.Parameters["@usuarioid"].Value = usuarioid;
+                command.Parameters["@contenido"].Value = contenido;
+            
+
+
+                try
+                {
+                    connectionDB.Open();
+                   
+                    resultadoQuery = command.ExecuteNonQuery();
+
+               
+                    string ConsultaID = "SELECT MAX([Post.PostID]) FROM [dbo].[Post]";
+                    command = new SqlCommand(queryInsertPost, connectionDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    idNuevoPost = reader.GetInt32(0);
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevoPost;
+
+            }
+        } 
 
 
 
@@ -326,16 +359,16 @@ namespace tp1_grupo6.Logica
 
 
         //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int eliminarUsuario(int Id)
+        public int eliminarUsuario(int UsuarioID)
         {
             string connectionString = Properties.Resources.connectionString;
-            string queryDelete = "DELETE FROM [dbo].[Usuario] WHERE ID=@id";
+            string queryDelete = "DELETE FROM [dbo].[Usuario] WHERE UsuarioID=@usuarioid";
             using (SqlConnection connectionDB =
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryDelete, connectionDB);
-                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                command.Parameters["@id"].Value = Id;
+                command.Parameters.Add(new SqlParameter("@UsuarioID", SqlDbType.Int));
+                command.Parameters["@usuarioid"].Value = UsuarioID;
                 try
                 {
                     connectionDB.Open();
@@ -363,22 +396,21 @@ namespace tp1_grupo6.Logica
 
 
         //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int modificarUsuario(int Id, int Dni, string Nombre,string Apellido, string Mail, string Password, bool EsADM,int intentosFallidos, bool Bloqueado)
+        public int modificarUsuario(int Id, int Dni, string Nombre,string Apellido, string Mail, string Password, bool EsADMIN, bool Bloqueado)
         {
             string connectionString = Properties.Resources.connectionString;
-            string queryUpdateUsuario = "UPDATE [dbo].[Usuario] SET Nombre=@nombre,Apellido=@apellido, Mail=@mail,Password=@password, EsADMIN=@esadm,IntentosFallidos=@intentosfallidos ,Bloqueado=@bloqueado WHERE ID=@id;";
+            string queryUpdateUsuario = "UPDATE [dbo].[Usuario] SET Nombre=@nombre,Apellido=@apellido, Mail=@mail,Password=@password, EsADMIN=@esadm ,Bloqueado=@bloqueado WHERE ID=@id;";
             using (SqlConnection connectionDB =
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryUpdateUsuario, connectionDB);
                 command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.NVarChar));
-                command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
+                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar));
                 command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
-                command.Parameters.Add(new SqlParameter("@intentosFallidos", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
                 command.Parameters["@id"].Value = Id;
                 command.Parameters["@dni"].Value = Dni;
@@ -386,8 +418,7 @@ namespace tp1_grupo6.Logica
                 command.Parameters["@apellido"].Value = Apellido;
                 command.Parameters["@mail"].Value = Mail;
                 command.Parameters["@password"].Value = Password;
-                command.Parameters["@esadm"].Value = EsADM;
-                command.Parameters["@intentosfallidos"].Value = intentosFallidos;
+                command.Parameters["@esadm"].Value = EsADMIN;
                 command.Parameters["@bloqueado"].Value = Bloqueado;
                 try
                 {

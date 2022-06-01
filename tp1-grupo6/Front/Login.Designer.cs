@@ -104,6 +104,7 @@ namespace tp1_grupo6
             // 
             resources.ApplyResources(this.textUsuario, "textUsuario");
             this.textUsuario.Name = "textUsuario";
+            this.textUsuario.TextChanged += new System.EventHandler(this.textUsuario_TextChanged);
             // 
             // label3
             // 

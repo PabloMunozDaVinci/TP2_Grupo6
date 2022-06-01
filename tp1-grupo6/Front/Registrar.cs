@@ -32,6 +32,8 @@ namespace tp1_grupo6.Front
             string mail = "";
             string password = "";
             string passwordRepetida = "";
+            bool esADMIN = false;
+            bool bloqueado = false;
 
             bool todoOk = true;
 
@@ -50,6 +52,7 @@ namespace tp1_grupo6.Front
             mail = textBoxMail.Text;
             password = textBoxContrasenia.Text;
             passwordRepetida = textBoxContraseniaRepetida.Text;
+
 
             if (DNI <= 0)
             {
@@ -100,7 +103,7 @@ namespace tp1_grupo6.Front
 
             if (todoOk)
             {
-                miRed.RegistrarUsuario(DNI, nombre, apellido, mail, password);
+                miRed.RegistrarUsuario(DNI, nombre, apellido, mail, password, esADMIN, bloqueado);
                 MessageBox.Show("Su Usuario se registro exitosamente.");
                 Dispose();
             }

@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EasyEncryption;
+using System.Data.SqlClient;
 
 namespace tp1_grupo6.Logica
 {
     public class RedSocial
     {
         private List<Usuario> usuarios;
-        private int IdUsuarios;
         private List<Post> posts;
         private List<Tag> tags;
         public Usuario usuarioActual { get; set; }
         public IDictionary<string, int> loginHistory;
         private const int cantMaxIntentos = 3;
+        private DB_Management DB;
 
         public RedSocial()
         {
@@ -22,28 +23,19 @@ namespace tp1_grupo6.Logica
             posts = new List<Post>();
             tags = new List<Tag>();
             this.usuarioActual = usuarioActual;
-            this.IdUsuarios = 0;
             this.loginHistory = new Dictionary<string, int>();
+            DB = new DB_Management();
+            inicializarAtributos();
         }
 
-        public bool RegistrarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password)
+        //Inicializo mis listas con los datos de la DB
+        private void inicializarAtributos()
         {
-            if (!ExisteUsuario(Mail))
-            {
-                try
-                {
-                    Usuario usuario = new Usuario(DNI, Nombre, Apellido, Mail, this.Hashear(Password));
-                    usuarios.Add(usuario);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }
-            return false;
+            usuarios = DB.inicializarUsuarios();
+            posts = DB.inicializarPost();
         }
 
+        //Metodo para hacer el hashing de la contraseña
         private string Hashear(string contraseñaSinHashear)
         {
             try
@@ -57,6 +49,7 @@ namespace tp1_grupo6.Logica
             }
         }
 
+        //Metodo para cargar los intentos fallidos de login de un usuario
         public string Intentos(string usuarioIngresado)
         {
             string mensaje = null;
@@ -78,70 +71,99 @@ namespace tp1_grupo6.Logica
             return mensaje;
         }
 
-
+        //Metodo para validar si esta bloqueado el usuario
         public bool EstaBloqueado(string Mail)
         {
             return DevolverUsuario(Mail).Bloqueado;
         }
 
-
-        //Falta probar
+        //Falta
         public void ModificarUsuario(int newID, string newNombre, string newApellido, string newMail, string newPassword)
         {
 
             if (usuarioActual != null && usuarioActual.ID == newID)
             {
-
-
                 usuarioActual.Nombre = newNombre;
                 usuarioActual.Apellido = newApellido;
                 usuarioActual.Mail = newMail;
                 usuarioActual.Password = newPassword;
-
-
             }
         }
 
-        //no se si funciona
-        public void EliminarUsuario(Usuario u, string Mail)
+        //Falta
+        public bool EliminarUsuario(int id)
         {
-            foreach (Usuario usuario in usuarios)
+            //primero me aseguro que lo pueda agregar a la base
+            if (DB.eliminarUsuario(id) == 1)
             {
-                if (usuario.Mail == Mail)
+                try
                 {
-                    usuarios.Remove(u);
+                    //Ahora sí lo elimino en la lista
+                    for (int i = 0; i < usuarios.Count; i++)
+                        if (usuarios[i].ID == id)
+                            usuarios.RemoveAt(i);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
                 }
             }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
+            }
         }
 
-
-
-
-        // Devuelve el Usuario correspondiente al Mail recibido.
+        //Devuelve el Usuario correspondiente al Mail recibido.
         private Usuario DevolverUsuario(string Mail)
         {
-            int a = 0;
             Usuario usuarioEncontrado = null;
 
-            if (usuarios.Count() > 0)
+            for (int i = 0; i <= usuarios.Count -1; i++)
             {
-                while (usuarios.Count() >= a || usuarioEncontrado == null)
+                if (usuarios[i].Mail == Mail)
                 {
-                    if (usuarios[a].Mail == Mail)
-                    {
-                        usuarioEncontrado = usuarios[a];
-                    }
-                    a++;
+                    usuarioEncontrado = usuarios[i];
+                    Console.WriteLine(usuarioEncontrado);
                 }
             }
             return usuarioEncontrado;
         }
+
+        //Metodo para crear el usuario y persistirlo en la BD y agregarlo a la lista de usuarios
+        public bool RegistrarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, bool EsADMIN, bool Bloqueado)
+        {
+            if (!ExisteUsuario(Mail))
+            {
+    
+                    int idNuevoUsuario;
+                    idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, EsADMIN, Bloqueado);
+                    if (idNuevoUsuario != -1)
+                    {
+                        //Ahora sí lo agrego en la lista
+                        Usuario nuevo = new Usuario(idNuevoUsuario, DNI, Nombre, Apellido, Mail, this.Hashear(Password), EsADMIN, Bloqueado);
+                        usuarios.Add(nuevo);
+                        return true;
+                    }
+                    else
+                    {
+                        //algo salió mal con la query porque no generó un id válido
+                        return false;
+                    }
+                
+            }
+            return false;
+        }
+
+
         // Se autentica al Usuario.
         public bool IniciarUsuario(string Mail, string Password)
         {
             bool ok = false;
             Usuario usuario = this.DevolverUsuario(Mail);
-            if (usuario.Password == this.Hashear(Password))
+            if (usuario.Password == Password)
             {
                 usuarioActual = usuario;
                 ok = true;
@@ -221,7 +243,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no se si funciona
+        /* no se si funciona
         public void AgregarAmigo(Usuario amigo)
         {
             if (usuarioActual != null)
@@ -231,7 +253,7 @@ namespace tp1_grupo6.Logica
 
             }
 
-        }
+        }*/
 
 
 
@@ -241,7 +263,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /* no funciona
         public void QuitarAmigo(Usuario exAmigo)
         {
             if (usuarioActual != null)
@@ -249,6 +271,36 @@ namespace tp1_grupo6.Logica
                 //usuarioActual.Amigos.Remove(amigo);
                 exAmigo.Amigos.Remove(usuarioActual);
             }
+        }*/
+
+
+
+
+
+
+
+        public string Postear(int ID, string contenido)
+        {
+            DateTime now = DateTime.Now;
+
+            if (usuarioActual != null )
+            {
+                int idNuevoPost;
+                idNuevoPost = DB.agregarPost( usuarioActual.ID,  contenido );
+                if (idNuevoPost != -1)
+                {
+                    //Ahora sí lo agrego en la lista
+                    Post nuevoPost = new Post(idNuevoPost, usuarioActual.ID, contenido, now);
+                    posts.Add(nuevoPost);
+                }
+                else
+                {
+                    //algo salió mal con la query porque no generó un id válido
+                    Console.WriteLine("error en query");
+                }
+
+            }
+             return contenido;
         }
 
 
@@ -256,14 +308,8 @@ namespace tp1_grupo6.Logica
 
 
 
-
-
-
-
-
-
-
-        // no se si funciona
+        // no se si funcionan
+        /*
         public void Postear(Post p, List<Tag> t)
         {
             bool encontre = false;
@@ -293,6 +339,7 @@ namespace tp1_grupo6.Logica
             }
         }
 
+        */
 
 
 
@@ -308,8 +355,7 @@ namespace tp1_grupo6.Logica
 
 
 
-
-        // no funciona
+        /* no funciona
         public void ModificarPost(int pID, Usuario pUsuario, string pContenido, List<Comentario> pComentarios, List<Reaccion> pReacciones, List<Tag> pTags, DateTime pFecha)
         {
             foreach (Post post in posts)
@@ -321,11 +367,11 @@ namespace tp1_grupo6.Logica
                     post.Comentarios = pComentarios;
                     post.Reacciones = pReacciones;
                     post.Tags = pTags;
-                    post.Fecha = pFecha;
+                    //post.Fecha = pFecha;
 
                 }
             }
-        }
+        }*/
 
 
 
@@ -355,7 +401,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /* no funciona
         public void Comentar(Post p, Comentario c)
         {
             //pregunto si el conteo de post es mayor a 0 para determinar si existen posts
@@ -379,7 +425,7 @@ namespace tp1_grupo6.Logica
                     }
                 }
             }
-        }
+        }*/
 
 
 
@@ -397,7 +443,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /*
         public void ModificarComentario(Post p, Comentario c)
         {
             if (posts.Count > 0)
@@ -420,7 +466,7 @@ namespace tp1_grupo6.Logica
                     }
                 }
             }
-        }
+        }*/
 
 
 
