@@ -328,7 +328,7 @@ namespace tp1_grupo6.Logica
                     resultadoQuery = command.ExecuteNonQuery();
 
                
-                    string ConsultaID = "SELECT MAX([PostID]) FROM [dbo].[Post]";
+                    string ConsultaID = "SELECT MAX([Post.PostID]) FROM [dbo].[Post]";
                     command = new SqlCommand(queryInsertPost, connectionDB);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
@@ -359,16 +359,16 @@ namespace tp1_grupo6.Logica
 
 
         //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int eliminarUsuario(int id)
+        public int eliminarUsuario(int UsuarioID)
         {
             string connectionString = Properties.Resources.connectionString;
-            string queryDelete = "DELETE FROM [dbo].[Usuario] WHERE UsuarioID=@id";
+            string queryDelete = "DELETE FROM [dbo].[Usuario] WHERE UsuarioID=@usuarioid";
             using (SqlConnection connectionDB =
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryDelete, connectionDB);
-                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                command.Parameters["@id"].Value = id;
+                command.Parameters.Add(new SqlParameter("@UsuarioID", SqlDbType.Int));
+                command.Parameters["@usuarioid"].Value = UsuarioID;
                 try
                 {
                     connectionDB.Open();

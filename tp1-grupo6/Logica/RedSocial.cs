@@ -91,14 +91,28 @@ namespace tp1_grupo6.Logica
         }
 
         //Falta
-        public void EliminarUsuario(Usuario u, string Mail)
+        public bool EliminarUsuario(int id)
         {
-            foreach (Usuario usuario in usuarios)
+            //primero me aseguro que lo pueda agregar a la base
+            if (DB.eliminarUsuario(id) == 1)
             {
-                if (usuario.Mail == Mail)
+                try
                 {
-                    usuarios.Remove(u);
+                    //Ahora sí lo elimino en la lista
+                    for (int i = 0; i < usuarios.Count; i++)
+                        if (usuarios[i].ID == id)
+                            usuarios.RemoveAt(i);
+                    return true;
                 }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
             }
         }
 
@@ -107,11 +121,12 @@ namespace tp1_grupo6.Logica
         {
             Usuario usuarioEncontrado = null;
 
-            for (int i = 0; i < usuarios.Count(); i++)
+            for (int i = 0; i <= usuarios.Count -1; i++)
             {
                 if (usuarios[i].Mail == Mail)
                 {
                     usuarioEncontrado = usuarios[i];
+                    Console.WriteLine(usuarioEncontrado);
                 }
             }
             return usuarioEncontrado;
@@ -228,7 +243,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no se si funciona
+        /* no se si funciona
         public void AgregarAmigo(Usuario amigo)
         {
             if (usuarioActual != null)
@@ -238,7 +253,7 @@ namespace tp1_grupo6.Logica
 
             }
 
-        }
+        }*/
 
 
 
@@ -248,7 +263,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /* no funciona
         public void QuitarAmigo(Usuario exAmigo)
         {
             if (usuarioActual != null)
@@ -256,7 +271,7 @@ namespace tp1_grupo6.Logica
                 //usuarioActual.Amigos.Remove(amigo);
                 exAmigo.Amigos.Remove(usuarioActual);
             }
-        }
+        }*/
 
 
 
@@ -285,7 +300,7 @@ namespace tp1_grupo6.Logica
                 }
 
             }
-            return contenido;
+             return contenido;
         }
 
 
@@ -340,7 +355,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /* no funciona
         public void ModificarPost(int pID, Usuario pUsuario, string pContenido, List<Comentario> pComentarios, List<Reaccion> pReacciones, List<Tag> pTags, DateTime pFecha)
         {
             foreach (Post post in posts)
@@ -356,7 +371,7 @@ namespace tp1_grupo6.Logica
 
                 }
             }
-        }
+        }*/
 
 
 
@@ -386,7 +401,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /* no funciona
         public void Comentar(Post p, Comentario c)
         {
             //pregunto si el conteo de post es mayor a 0 para determinar si existen posts
@@ -410,7 +425,7 @@ namespace tp1_grupo6.Logica
                     }
                 }
             }
-        }
+        }*/
 
 
 
@@ -428,7 +443,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /*
         public void ModificarComentario(Post p, Comentario c)
         {
             if (posts.Count > 0)
@@ -451,7 +466,7 @@ namespace tp1_grupo6.Logica
                     }
                 }
             }
-        }
+        }*/
 
 
 
