@@ -249,6 +249,7 @@
             // 
             resources.ApplyResources(this.textBoxNombre, "textBoxNombre");
             this.textBoxNombre.Name = "textBoxNombre";
+            this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
             // 
             // label8
             // 

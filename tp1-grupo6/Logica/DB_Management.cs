@@ -328,7 +328,7 @@ namespace tp1_grupo6.Logica
                     resultadoQuery = command.ExecuteNonQuery();
 
                
-                    string ConsultaID = "SELECT MAX([PostID]) FROM [dbo].[Post]";
+                    string ConsultaID = "SELECT MAX([Post.PostID]) FROM [dbo].[Post]";
                     command = new SqlCommand(queryInsertPost, connectionDB);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
