@@ -340,7 +340,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /* no funciona
         public void ModificarPost(int pID, Usuario pUsuario, string pContenido, List<Comentario> pComentarios, List<Reaccion> pReacciones, List<Tag> pTags, DateTime pFecha)
         {
             foreach (Post post in posts)
@@ -356,7 +356,7 @@ namespace tp1_grupo6.Logica
 
                 }
             }
-        }
+        }*/
 
 
 
@@ -386,7 +386,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /* no funciona
         public void Comentar(Post p, Comentario c)
         {
             //pregunto si el conteo de post es mayor a 0 para determinar si existen posts
@@ -410,7 +410,7 @@ namespace tp1_grupo6.Logica
                     }
                 }
             }
-        }
+        }*/
 
 
 
@@ -428,7 +428,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /*
         public void ModificarComentario(Post p, Comentario c)
         {
             if (posts.Count > 0)
@@ -451,7 +451,7 @@ namespace tp1_grupo6.Logica
                     }
                 }
             }
-        }
+        }*/
 
 
 
