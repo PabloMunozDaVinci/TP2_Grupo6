@@ -16,7 +16,6 @@ namespace tp1_grupo6
     public partial class Login : Form
     {
         public RedSocial miRed;
-        private Usuario usuario;
         public string usuarioIngresado;
         public string contraseniaIngresada;
         public bool loginOk;
@@ -50,7 +49,7 @@ namespace tp1_grupo6
                     if (loginOk)
                     {
                         argumentos[0] = "user";
-                        Form formIndex = new Front.Index(this.miRed,this.usuario);
+                        Form formIndex = new Front.Index(this.miRed);
                         textUsuario.Text = "";
                         textContrasenia.Text = "";
                         miRed.loginHistory.Clear();

@@ -206,22 +206,9 @@ namespace tp1_grupo6.Logica
             }
             return todoOk;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // funciona
-        public bool CerrarSesion(Usuario u)
+        
+        //seteo el usuario actual en null para cerrar la sesion
+        public bool CerrarSesion()
         {
             //Pregunto si existe usuario Actual
             if (usuarioActual != null)
@@ -231,15 +218,6 @@ namespace tp1_grupo6.Logica
             }
             return true;
         }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -16,18 +16,13 @@ namespace tp1_grupo6.Front
         public Perfil(RedSocial miRed)
         {
             this.miRed = miRed;
-
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-
-
-
-
-
+            miRed.CerrarSesion();
+            Dispose();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -43,6 +38,19 @@ namespace tp1_grupo6.Front
         }
 
         private void textBoxNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Form index = new Index(this.miRed);
+            this.Hide();
+            index.ShowDialog();
+            this.Show();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
