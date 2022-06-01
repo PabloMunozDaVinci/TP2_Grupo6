@@ -12,11 +12,11 @@ namespace tp1_grupo6.Front
     public partial class Perfil : Form
     {
         private RedSocial miRed;
-        private Usuario usuario;
-        public Perfil(RedSocial miRed, Usuario usuario)
+
+        public Perfil(RedSocial miRed)
         {
             this.miRed = miRed;
-            this.usuario = usuario;
+
             InitializeComponent();
         }
 
@@ -28,6 +28,18 @@ namespace tp1_grupo6.Front
 
 
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (miRed.EliminarUsuario(miRed.usuarioActual.ID))
+            {
+                MessageBox.Show("Eliminado con éxito");
+            }
+            else
+            {
+                MessageBox.Show("No se pudo eliminar el usuario");
+            }    
         }
     }
 }

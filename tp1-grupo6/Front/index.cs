@@ -12,12 +12,12 @@ namespace tp1_grupo6.Front
     public partial class Index : Form
     {
         private RedSocial miRed;
-        private Usuario usuario;
 
-        public Index(RedSocial miRed, Usuario usuario)
+
+        public Index(RedSocial miRed)
         {
             this.miRed = miRed;
-            this.usuario = usuario;
+
             InitializeComponent();
 
         }
@@ -44,7 +44,7 @@ namespace tp1_grupo6.Front
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Form perfil = new Perfil(this.miRed, this.usuario);
+            Form perfil = new Perfil(this.miRed);
             this.Hide();
             perfil.ShowDialog();
             this.Show();
