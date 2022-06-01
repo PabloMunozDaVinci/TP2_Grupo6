@@ -28,11 +28,14 @@ namespace tp1_grupo6.Logica
             inicializarAtributos();
         }
 
+        //Inicializo mis listas con los datos de la DB
         private void inicializarAtributos()
         {
             usuarios = DB.inicializarUsuarios();
+            posts = DB.inicializarPost();
         }
 
+        //Metodo para hacer el hashing de la contraseña
         private string Hashear(string contraseñaSinHashear)
         {
             try
@@ -46,6 +49,7 @@ namespace tp1_grupo6.Logica
             }
         }
 
+        //Metodo para cargar los intentos fallidos de login de un usuario
         public string Intentos(string usuarioIngresado)
         {
             string mensaje = null;
@@ -67,6 +71,7 @@ namespace tp1_grupo6.Logica
             return mensaje;
         }
 
+        //Metodo para validar si esta bloqueado el usuario
         public bool EstaBloqueado(string Mail)
         {
             return DevolverUsuario(Mail).Bloqueado;
@@ -78,18 +83,14 @@ namespace tp1_grupo6.Logica
 
             if (usuarioActual != null && usuarioActual.ID == newID)
             {
-
-
                 usuarioActual.Nombre = newNombre;
                 usuarioActual.Apellido = newApellido;
                 usuarioActual.Mail = newMail;
                 usuarioActual.Password = newPassword;
-
-
             }
         }
 
-        //no se si funciona
+        //Falta
         public void EliminarUsuario(Usuario u, string Mail)
         {
             foreach (Usuario usuario in usuarios)
@@ -101,7 +102,7 @@ namespace tp1_grupo6.Logica
             }
         }
 
-        // Devuelve el Usuario correspondiente al Mail recibido.
+        //Devuelve el Usuario correspondiente al Mail recibido.
         private Usuario DevolverUsuario(string Mail)
         {
             Usuario usuarioEncontrado = null;
@@ -113,22 +114,10 @@ namespace tp1_grupo6.Logica
                     usuarioEncontrado = usuarios[i];
                 }
             }
-
-            /*if (usuarios.Count() > 0)
-            {
-                while (usuarios.Count() >= a || usuarioEncontrado == null)
-                {
-                    if (usuarios[a].Mail == Mail)
-                    {
-                        usuarioEncontrado = usuarios[a];
-                    }
-                    a++;
-                }
-            }*/
-
             return usuarioEncontrado;
         }
 
+        //Metodo para crear el usuario y persistirlo en la BD y agregarlo a la lista de usuarios
         public bool RegistrarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, bool EsADMIN, bool Bloqueado)
         {
             if (!ExisteUsuario(Mail))
@@ -275,13 +264,37 @@ namespace tp1_grupo6.Logica
 
 
 
+        public string Postear(int ID, string contenido)
+        {
+            DateTime now = DateTime.Now;
+
+            if (usuarioActual != null )
+            {
+                int idNuevoPost;
+                idNuevoPost = DB.agregarPost( usuarioActual.ID,  contenido );
+                if (idNuevoPost != -1)
+                {
+                    //Ahora sí lo agrego en la lista
+                    Post nuevoPost = new Post(idNuevoPost, usuarioActual.ID, contenido, now);
+                    posts.Add(nuevoPost);
+                }
+                else
+                {
+                    //algo salió mal con la query porque no generó un id válido
+                    Console.WriteLine("error en query");
+                }
+
+            }
+            return contenido;
+        }
 
 
 
 
 
 
-        // no se si funciona
+        // no se si funcionan
+        /*
         public void Postear(Post p, List<Tag> t)
         {
             bool encontre = false;
@@ -311,7 +324,7 @@ namespace tp1_grupo6.Logica
             }
         }
 
-
+        */
 
 
 
