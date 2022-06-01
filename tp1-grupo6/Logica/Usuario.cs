@@ -30,7 +30,7 @@ namespace tp1_grupo6.Logica
             Bloqueado = false;
             EsAdmin = false;            
             misAmigos = new List<Usuario>();
-            misPost = new List<Post>();
+            misPosts = new List<Post>();
             misComentarios = new List<Comentario>();
             misReacciones = new List<Reaccion>();
         }
@@ -46,7 +46,7 @@ namespace tp1_grupo6.Logica
             this.Bloqueado = Bloqueado;
             this.EsAdmin = EsAdmin;            
             misAmigos = new List<Usuario>();
-            misPost = new List<Post>();
+            misPosts = new List<Post>();
             misComentarios = new List<Comentario>();
             misReacciones = new List<Reaccion>();
         }

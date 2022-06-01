@@ -91,14 +91,28 @@ namespace tp1_grupo6.Logica
         }
 
         //Falta
-        public void EliminarUsuario(Usuario u, string Mail)
+        public bool EliminarUsuario(int id)
         {
-            foreach (Usuario usuario in usuarios)
+            //primero me aseguro que lo pueda agregar a la base
+            if (DB.eliminarUsuario(id) == 1)
             {
-                if (usuario.Mail == Mail)
+                try
                 {
-                    usuarios.Remove(u);
+                    //Ahora sí lo elimino en la lista
+                    for (int i = 0; i < usuarios.Count; i++)
+                        if (usuarios[i].ID == id)
+                            usuarios.RemoveAt(i);
+                    return true;
                 }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
             }
         }
 
@@ -228,7 +242,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no se si funciona
+        /* no se si funciona
         public void AgregarAmigo(Usuario amigo)
         {
             if (usuarioActual != null)
@@ -238,7 +252,7 @@ namespace tp1_grupo6.Logica
 
             }
 
-        }
+        }*/
 
 
 
@@ -248,7 +262,7 @@ namespace tp1_grupo6.Logica
 
 
 
-        // no funciona
+        /* no funciona
         public void QuitarAmigo(Usuario exAmigo)
         {
             if (usuarioActual != null)
@@ -256,7 +270,7 @@ namespace tp1_grupo6.Logica
                 //usuarioActual.Amigos.Remove(amigo);
                 exAmigo.Amigos.Remove(usuarioActual);
             }
-        }
+        }*/
 
 
 
