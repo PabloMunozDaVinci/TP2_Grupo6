@@ -14,10 +14,10 @@ namespace tp1_grupo6.Logica
         public string Password { get; set; }
         public bool Bloqueado { get; set; }
         public bool EsAdmin { get; set; }
-        public List<Usuario> Amigos { get; set; }
-        public List<Post> MisPost { get; set; }
-        public List<Comentario> MisComentarios { get; set; }
-        public List<Reaccion> MisReacciones { get; set; }
+        public List<Usuario> misAmigos { get; set; }
+        public List<Post> misPosts { get; set; }
+        public List<Comentario> misComentarios { get; set; }
+        public List<Reaccion> misReacciones { get; set; }
         
         //Constructor logico para registrar un usuario
         public Usuario(int DNI, string Nombre, string Apellido, string Mail, string Password)
@@ -53,20 +53,20 @@ namespace tp1_grupo6.Logica
 
         public void agregarAmigos(Usuario usuario)
         {
-            misAmigos.Add(post);
+            misAmigos.Add(usuario);
         }
-        public void quitarDireccion(Post post)
+        public void quitarAmigos(Usuario usuario)
         {
-            misPosts.Remove(post);
+            misAmigos.Remove(usuario);
         }
 
         public void agregarPosts(Post post)
         {
-            misPost.Add(post);
+            misPosts.Add(post);
         }
         public void quitarDireccion(Post post)
         {
-            misPost.Remove(post);
+            misPosts.Remove(post);
         }
 
         public void agregarComentarios(Comentario comentario)
