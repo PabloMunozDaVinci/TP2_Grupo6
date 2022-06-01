@@ -121,11 +121,12 @@ namespace tp1_grupo6.Logica
         {
             Usuario usuarioEncontrado = null;
 
-            for (int i = 0; i < usuarios.Count(); i++)
+            for (int i = 0; i <= usuarios.Count -1; i++)
             {
                 if (usuarios[i].Mail == Mail)
                 {
                     usuarioEncontrado = usuarios[i];
+                    Console.WriteLine(usuarioEncontrado);
                 }
             }
             return usuarioEncontrado;
@@ -299,7 +300,7 @@ namespace tp1_grupo6.Logica
                 }
 
             }
-            return contenido;
+             return contenido;
         }
 
 

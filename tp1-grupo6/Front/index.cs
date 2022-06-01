@@ -13,11 +13,11 @@ namespace tp1_grupo6.Front
     {
         private RedSocial miRed;
 
-
-        public Index(RedSocial miRed)
+        private Usuario usuario;
+        public Index(RedSocial miRed, Usuario usuario)
         {
             this.miRed = miRed;
-
+            this.usuario = usuario;
             InitializeComponent();
 
         }
@@ -67,6 +67,35 @@ namespace tp1_grupo6.Front
 
         private void button7_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            if (miRed.usuarioActual != null) {
+
+                string contenido;
+
+                contenido = textBox1.Text;
+
+                Console.WriteLine(contenido);
+
+                miRed.Postear(miRed.usuarioActual.ID, contenido);
+
+                textBox4.Text = contenido;
+
+
+            }
+
+
+
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+    
 
         }
     }

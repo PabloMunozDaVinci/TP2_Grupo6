@@ -16,7 +16,7 @@ namespace tp1_grupo6
     public partial class Login : Form
     {
         public RedSocial miRed;
-
+        private Usuario usuario;
         public string usuarioIngresado;
         public string contraseniaIngresada;
         public bool loginOk;
@@ -40,6 +40,8 @@ namespace tp1_grupo6
             labelIntentos.Text = "";
             usuarioIngresado = textUsuario.Text;
             contraseniaIngresada = textContrasenia.Text;
+            bool test;
+            test = miRed.ExisteUsuario(usuarioIngresado);
             if (miRed.ExisteUsuario(usuarioIngresado))
             {
                 if (!miRed.EstaBloqueado(usuarioIngresado))
@@ -48,7 +50,7 @@ namespace tp1_grupo6
                     if (loginOk)
                     {
                         argumentos[0] = "user";
-                        Form formIndex = new Front.Index(this.miRed);
+                        Form formIndex = new Front.Index(this.miRed,this.usuario);
                         textUsuario.Text = "";
                         textContrasenia.Text = "";
                         miRed.loginHistory.Clear();
@@ -90,6 +92,11 @@ namespace tp1_grupo6
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textUsuario_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -41,5 +41,10 @@ namespace tp1_grupo6.Front
                 MessageBox.Show("No se pudo eliminar el usuario");
             }    
         }
+
+        private void textBoxNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

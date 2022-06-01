@@ -61,7 +61,7 @@ namespace tp1_grupo6.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Data Source=DESKTOP-QOGFMM7\SQLEXPRESS;Initial Catalog=RedSocial;Integrated Security=True.
+        ///   Busca una cadena traducida similar a Data Source=DESKTOP-15I3C3R\SQLEXPRESS;Initial Catalog=RedSocial;Integrated Security=True.
         /// </summary>
         internal static string connectionString {
             get {
