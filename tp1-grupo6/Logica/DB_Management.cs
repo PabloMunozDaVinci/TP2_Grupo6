@@ -135,7 +135,7 @@ namespace tp1_grupo6.Logica
                     while (reader.Read())
                     {
                         // revisar como agregar un usuario ya que tenemos lista de usuario , como linkear eso
-                        auxP = new Post(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetDateTime(3));
+                        auxP = new Post(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4));
                         misPost.Add(auxP);
 
                     }
@@ -152,6 +152,16 @@ namespace tp1_grupo6.Logica
             }
             return misPost;
         }
+
+
+
+
+
+
+
+
+
+
 
         public List<Tag> inicializarTag()
         {
@@ -298,52 +308,7 @@ namespace tp1_grupo6.Logica
         }
 
 
-        public int agregarPost(int usuarioid ,string contenido) {
 
-            int resultadoQuery;
-            int idNuevoPost = -1;
-
-
-            string connectionString = Properties.Resources.connectionString;
-            string queryInsertPost = "INSERT INTO [dbo].[Post] ([UsuarioID],[Contenido],[Fecha]) VALUES (@usuarioid,@contenido,GETDATE());";
-
-            using (SqlConnection connectionDB =
-             new SqlConnection(connectionString)) {
-
-                SqlCommand command = new SqlCommand(queryInsertPost, connectionDB);
-
-                command.Parameters.Add(new SqlParameter("@UsuarioID", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@Contenido", SqlDbType.VarChar));
-            
-
-                command.Parameters["@usuarioid"].Value = usuarioid;
-                command.Parameters["@contenido"].Value = contenido;
-            
-
-
-                try
-                {
-                    connectionDB.Open();
-                   
-                    resultadoQuery = command.ExecuteNonQuery();
-
-               
-                    string ConsultaID = "SELECT MAX([PostID]) FROM [dbo].[Post]";
-                    command = new SqlCommand(queryInsertPost, connectionDB);
-                    SqlDataReader reader = command.ExecuteReader();
-                    reader.Read();
-                    idNuevoPost = reader.GetInt32(0);
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    return -1;
-                }
-                return idNuevoPost;
-
-            }
-        } 
 
 
 
