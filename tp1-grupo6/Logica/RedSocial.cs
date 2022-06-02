@@ -180,6 +180,7 @@ namespace tp1_grupo6.Logica
             return false;
         }
         // se obtiene el ID del usuario
+        //De momento no se esta usando en ninguna parte del codigo
         public int obtenerUsuarioId(string Mail)
         {
             foreach (Usuario u in usuarios)
@@ -278,7 +279,7 @@ namespace tp1_grupo6.Logica
 
 
 
-
+        //Funciona
         public string Postear(int ID, string contenido)
         {
             DateTime now = DateTime.Now;
@@ -292,6 +293,8 @@ namespace tp1_grupo6.Logica
                     //Ahora sí lo agrego en la lista
                     Post nuevoPost = new Post(idNuevoPost, usuarioActual.ID, contenido, now);
                     posts.Add(nuevoPost);
+                    //agrego post tambien a la lista de post del usuario en memoria
+                    usuarioActual.misPosts.Add(nuevoPost);
                 }
                 else
                 {
@@ -304,9 +307,69 @@ namespace tp1_grupo6.Logica
         }
 
 
+        public bool modificarPost(int ID, int usuarioID, string newContenido, DateTime newFecha)
+        {
 
 
+            if (DB.modificarPost(ID, usuarioID, newContenido, newFecha) == 1) {
 
+                try
+                {
+                    //Ahora sí lo MODIFICO en la lista
+                    for (int i = 0; i <posts.Count ; i++)
+                        if (posts[i].ID==ID)
+                        {
+                            posts[i].Contenido = newContenido;
+                            posts[i].Fecha=newFecha;
+                           
+                        }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
+            }
+
+        }
+
+
+        }
+        public bool modificarUsuario(int Id, int Dni, string Nombre, string Mail, string Password, bool EsADM, bool Bloqueado)
+        {
+            //primero me aseguro que lo pueda agregar a la base
+            if (DB.modificarUsuario(Id, Dni, Nombre, Mail, Password, EsADM, Bloqueado) == 1)
+            {
+                try
+                {
+                    //Ahora sí lo MODIFICO en la lista
+                    for (int i = 0; i < misUsuarios.Count; i++)
+                        if (misUsuarios[i].id == Id)
+                        {
+                            misUsuarios[i].nombre = Nombre;
+                            misUsuarios[i].mail = Mail;
+                            misUsuarios[i].password = Password;
+                            misUsuarios[i].esADM = EsADM;
+                            misUsuarios[i].bloqueado = Bloqueado;
+                        }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
+            }
+        }
 
         // no se si funcionan
         /*

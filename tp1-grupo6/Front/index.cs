@@ -84,6 +84,7 @@ namespace tp1_grupo6.Front
                 miRed.Postear(miRed.usuarioActual.ID, contenido);
 
                 textBox4.Text = contenido;
+                textBox1.Text = "";
 
 
             }
@@ -98,5 +99,26 @@ namespace tp1_grupo6.Front
     
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            if (miRed.usuarioActual != null)
+            {
+                string contenido;
+
+                contenido = textBox4.Text;
+
+                Console.WriteLine(contenido);
+
+                miRed.modificarPost(miRed.posts.,miRed.usuarioActual.ID,contenido,now);
+
+                textBox4.Text = contenido;
+                textBox1.Text = "";
+            }
+
+
+
+            }
     }
 }
