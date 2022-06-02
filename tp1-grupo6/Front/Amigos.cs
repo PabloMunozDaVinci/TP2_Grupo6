@@ -5,13 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using tp1_grupo6.Logica;
 
 namespace tp1_grupo6.Front
 {
     public partial class Amigos : Form
     {
-        public Amigos()
+        private RedSocial miRed;
+
+        public Amigos(RedSocial miRed)
         {
+            this.miRed = miRed;
             InitializeComponent();
         }
 
@@ -147,7 +151,8 @@ namespace tp1_grupo6.Front
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            miRed.CerrarSesion();
+            Dispose();
         }
     }
 }

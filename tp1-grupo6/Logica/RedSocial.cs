@@ -77,20 +77,38 @@ namespace tp1_grupo6.Logica
             return DevolverUsuario(Mail).Bloqueado;
         }
 
-        //Falta
-        public void ModificarUsuario(int newID, string newNombre, string newApellido, string newMail, string newPassword)
+        //Modifica el usuario en la BD y en la lista de usuarios
+        public bool ModificarUsuario(int UsuarioID, string Nombre, string Apellido, string Mail, string Password)
         {
-
-            if (usuarioActual != null && usuarioActual.ID == newID)
+            //primero me aseguro que lo pueda agregar a la base
+            if (DB.modificarUsuario(UsuarioID, Nombre,  Apellido, Mail, Password) == 1)
             {
-                usuarioActual.Nombre = newNombre;
-                usuarioActual.Apellido = newApellido;
-                usuarioActual.Mail = newMail;
-                usuarioActual.Password = newPassword;
+                try
+                {
+                    //Ahora sí lo MODIFICO en la lista
+                    for (/*int i = 0; i < usuarios.Count; i++*/int i = 0; i <= usuarios.Count - 1; i++)
+                        if (usuarios[i].ID == UsuarioID)
+                        {
+                            usuarios[i].Nombre = Nombre;
+                            usuarios[i].Apellido = Apellido;
+                            usuarios[i].Mail = Mail;
+                            usuarios[i].Password = Password;
+                        }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
             }
         }
 
-        //Falta
+        //Elimina el usuario de la BD y de la lista
         public bool EliminarUsuario(int id)
         {
             //primero me aseguro que lo pueda agregar a la base
@@ -206,22 +224,9 @@ namespace tp1_grupo6.Logica
             }
             return todoOk;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // funciona
-        public bool CerrarSesion(Usuario u)
+        
+        //seteo el usuario actual en null para cerrar la sesion
+        public bool CerrarSesion()
         {
             //Pregunto si existe usuario Actual
             if (usuarioActual != null)
@@ -231,15 +236,6 @@ namespace tp1_grupo6.Logica
             }
             return true;
         }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -5,13 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using tp1_grupo6.Logica;
 
 namespace tp1_grupo6.Front
 {
     public partial class Post : Form
     {
-        public Post()
+        private RedSocial miRed;
+
+        public Post(RedSocial miRed)
         {
+            this.miRed = miRed;
             InitializeComponent();
         }
 
@@ -22,7 +26,8 @@ namespace tp1_grupo6.Front
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            miRed.CerrarSesion();
+            Dispose();
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
