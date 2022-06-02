@@ -58,7 +58,6 @@ namespace tp1_grupo6.Front
 
         private void button2_Click(object sender, EventArgs e)
         {
-
             if (miRed.ModificarUsuario(int.Parse(label7.Text), textBoxNombre.Text, textBoxApellido.Text, textBoxMail.Text, textBoxPassword.Text))
             {
                 MessageBox.Show("Modificado con éxito");
