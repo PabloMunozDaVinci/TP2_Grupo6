@@ -104,5 +104,32 @@ namespace tp1_grupo6.Front
         {
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+
+
+            DateTime now = DateTime.Now;
+            if (miRed.usuarioActual != null)
+            {
+                string contenido;
+
+                contenido = textBox4.Text;
+
+                Console.WriteLine(contenido);
+
+                miRed.modificarPost(miRed.obtenerPostID(miRed.usuarioActual.ID), miRed.usuarioActual.ID, contenido, now);
+
+                textBox4.Text = contenido;
+                textBox1.Text = "";
+            }
+
+
+
+
+
+
+        }
     }
 }

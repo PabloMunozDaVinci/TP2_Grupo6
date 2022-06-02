@@ -434,5 +434,47 @@ namespace tp1_grupo6.Logica
             }
         }
 
+
+        public int modificarPost(int ID, int UsuarioID, string Contenido, DateTime Fecha)
+        {
+            string connectionString = Properties.Resources.connectionString;
+            string queryUpdatePost = "UPDATE [dbo].[Post] SET Contenido=@contenido, Fecha=GETDATE() WHERE PostID=@id AND UsuarioID=@usuarioid;";
+            using (SqlConnection connectionDB =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryUpdatePost, connectionDB);
+               // command.Parameters.Add(new SqlParameter("@PostID", SqlDbType.Int));
+                //command.Parameters.Add(new SqlParameter("@UsuarioID", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@Contenido", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@Fecha", SqlDbType.DateTime));
+
+               // command.Parameters["@postid"].Value = ID;
+                //command.Parameters["@usuadioid"].Value = UsuarioID;
+                command.Parameters["@contenido"].Value = Contenido;
+                command.Parameters["@fecha"].Value = Fecha;
+
+                try
+                {
+
+
+
+                    connectionDB.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+
+
+
+
+
+
     }
 }

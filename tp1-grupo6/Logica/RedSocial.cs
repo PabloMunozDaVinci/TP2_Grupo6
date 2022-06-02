@@ -299,8 +299,49 @@ namespace tp1_grupo6.Logica
              return contenido;
         }
 
+        public int obtenerPostID(int usuarioID)
+        {
+            foreach (Post p in posts)
+            {
+                if (p.usuarioID == usuarioID)
+                {
+                    return p.ID;
+                }
+            }
+            return 0;
+        }
+
+        public bool modificarPost(int ID, int usuarioID, string newContenido, DateTime newFecha)
+        {
 
 
+            if (DB.modificarPost(ID, usuarioID, newContenido, newFecha) == 1)
+            {
+
+                try
+                {
+                    //Ahora sí lo MODIFICO en la lista
+                    for (int i = 0; i < posts.Count; i++)
+                        if (posts[i].ID == ID)
+                        {
+                            posts[i].Contenido = newContenido;
+                            posts[i].Fecha = newFecha;
+
+                        }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
+            }
+
+        }
 
 
 
