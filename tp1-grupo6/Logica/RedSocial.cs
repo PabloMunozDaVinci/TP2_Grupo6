@@ -288,6 +288,7 @@ namespace tp1_grupo6.Logica
                     //Ahora sí lo agrego en la lista
                     Post nuevoPost = new Post(idNuevoPost, usuarioActual.ID, contenido, now);
                     posts.Add(nuevoPost);
+                    usuarioActual.misPosts.Add(nuevoPost);
                 }
                 else
                 {
