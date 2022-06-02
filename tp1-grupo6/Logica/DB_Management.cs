@@ -396,30 +396,30 @@ namespace tp1_grupo6.Logica
 
 
         //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-        public int modificarUsuario(int Id, int Dni, string Nombre,string Apellido, string Mail, string Password, bool EsADMIN, bool Bloqueado)
+        public int modificarUsuario(int UsuarioID, string Nombre,string Apellido, string Mail, string Password/*bool EsAdmin, bool Bloqueado*/ )
         {
             string connectionString = Properties.Resources.connectionString;
-            string queryUpdateUsuario = "UPDATE [dbo].[Usuario] SET Nombre=@nombre,Apellido=@apellido, Mail=@mail,Password=@password, EsADMIN=@esadm ,Bloqueado=@bloqueado WHERE ID=@id;";
+            string queryUpdateUsuario = "UPDATE [dbo].[Usuario] SET Nombre=@nombre,Apellido=@apellido, Mail=@mail,Password=@password WHERE ID=@usuarioid;";
             using (SqlConnection connectionDB =
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryUpdateUsuario, connectionDB);
-                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@dni", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@nombre", SqlDbType.VarChar));
-                command.Parameters.Add(new SqlParameter("@apellido", SqlDbType.VarChar));
-                command.Parameters.Add(new SqlParameter("@mail", SqlDbType.VarChar));
-                command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar));
-                command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
-                command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
-                command.Parameters["@id"].Value = Id;
-                command.Parameters["@dni"].Value = Dni;
+                command.Parameters.Add(new SqlParameter("@UsuarioID", SqlDbType.Int));
+                //command.Parameters.Add(new SqlParameter("@DNI", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@Nombre", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@Apellido", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@Mail", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@Password", SqlDbType.VarChar));
+                //command.Parameters.Add(new SqlParameter("@EsAdmin", SqlDbType.Bit));
+                //command.Parameters.Add(new SqlParameter("@Bloqueado", SqlDbType.Bit));
+                command.Parameters["@usuarioid"].Value = UsuarioID;
+                //command.Parameters["@dni"].Value = DNI;
                 command.Parameters["@nombre"].Value = Nombre;
                 command.Parameters["@apellido"].Value = Apellido;
                 command.Parameters["@mail"].Value = Mail;
                 command.Parameters["@password"].Value = Password;
-                command.Parameters["@esadm"].Value = EsADMIN;
-                command.Parameters["@bloqueado"].Value = Bloqueado;
+                //command.Parameters["@esadmin"].Value = EsAdmin;
+                //command.Parameters["@bloqueado"].Value = Bloqueado;
                 try
                 {
                     connectionDB.Open();
