@@ -117,9 +117,15 @@ namespace tp1_grupo6.Front
 
                 contenido = textBox4.Text;
 
-                Console.WriteLine(contenido);
+                if (miRed.modificarPost(miRed.obtenerPostID(), miRed.usuarioActual.ID, contenido, now))
+                {
+                    MessageBox.Show("Modificado con éxito");
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo el post");
+                }
 
-                miRed.modificarPost(miRed.obtenerPostID(miRed.usuarioActual.ID), miRed.usuarioActual.ID, contenido, now);
 
                 textBox4.Text = contenido;
                 textBox1.Text = "";

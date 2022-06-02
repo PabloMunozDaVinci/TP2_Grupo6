@@ -443,13 +443,12 @@ namespace tp1_grupo6.Logica
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryUpdatePost, connectionDB);
-               // command.Parameters.Add(new SqlParameter("@PostID", SqlDbType.Int));
-                //command.Parameters.Add(new SqlParameter("@UsuarioID", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@Contenido", SqlDbType.VarChar));
-                command.Parameters.Add(new SqlParameter("@Fecha", SqlDbType.DateTime));
-
-               // command.Parameters["@postid"].Value = ID;
-                //command.Parameters["@usuadioid"].Value = UsuarioID;
+                command.Parameters.Add(new SqlParameter("@postid", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@usuadioid", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@contenido", SqlDbType.VarChar));
+                command.Parameters.Add(new SqlParameter("@fecha", SqlDbType.DateTime));
+                command.Parameters["@postid"].Value = ID;
+                command.Parameters["@usuadioid"].Value = UsuarioID;
                 command.Parameters["@contenido"].Value = Contenido;
                 command.Parameters["@fecha"].Value = Fecha;
 

@@ -305,7 +305,7 @@ namespace tp1_grupo6.Logica
             {
                 if (p.usuarioID == usuarioID)
                 {
-                    return p.ID;
+                    return 8;
                 }
             }
             return 0;
@@ -317,16 +317,14 @@ namespace tp1_grupo6.Logica
 
             if (DB.modificarPost(ID, usuarioID, newContenido, newFecha) == 1)
             {
-
                 try
                 {
                     //Ahora sí lo MODIFICO en la lista
-                    for (int i = 0; i < posts.Count; i++)
+                    for (int i = 0; i <= usuarios.Count - 1; i++)
                         if (posts[i].ID == ID)
                         {
                             posts[i].Contenido = newContenido;
                             posts[i].Fecha = newFecha;
-
                         }
                     return true;
                 }
