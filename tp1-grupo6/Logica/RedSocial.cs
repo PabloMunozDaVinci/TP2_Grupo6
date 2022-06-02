@@ -81,12 +81,12 @@ namespace tp1_grupo6.Logica
         public bool ModificarUsuario(int UsuarioID, string Nombre, string Apellido, string Mail, string Password)
         {
             //primero me aseguro que lo pueda agregar a la base
-            if (DB.modificarUsuario(UsuarioID, Nombre,  Apellido, Mail, Password) == 1)
+            if (DB.modificarUsuario(UsuarioID, Nombre, Apellido, Mail, Password) == 1)
             {
                 try
                 {
                     //Ahora sí lo MODIFICO en la lista
-                    for (/*int i = 0; i < usuarios.Count; i++*/int i = 0; i <= usuarios.Count - 1; i++)
+                    for (int i = 0; i <= usuarios.Count - 1; i++)
                         if (usuarios[i].ID == UsuarioID)
                         {
                             usuarios[i].Nombre = Nombre;
