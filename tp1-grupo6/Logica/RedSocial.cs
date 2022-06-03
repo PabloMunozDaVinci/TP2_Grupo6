@@ -9,7 +9,8 @@ namespace tp1_grupo6.Logica
 {
     public class RedSocial
     {
-        private List<Usuario> usuarios;
+        public int idNuevoPost { get; set; }
+    private List<Usuario> usuarios;
         private List<Post> posts;
         private List<Tag> tags;
         public Usuario usuarioActual { get; set; }
@@ -276,7 +277,7 @@ namespace tp1_grupo6.Logica
 
 
         public string Postear(int ID, string contenido)
-        {
+         {
             DateTime now = DateTime.Now;
 
             if (usuarioActual != null )
@@ -289,6 +290,7 @@ namespace tp1_grupo6.Logica
                     Post nuevoPost = new Post(idNuevoPost, usuarioActual.ID, contenido, now);
                     posts.Add(nuevoPost);
                     usuarioActual.misPosts.Add(nuevoPost);
+                   this.idNuevoPost = idNuevoPost;
                 }
                 else
                 {
@@ -299,12 +301,12 @@ namespace tp1_grupo6.Logica
             }
              return contenido;
         }
-
+        // no funciona
         public int obtenerPostID(int usuarioID)
         {
             foreach (Post p in posts)
             {
-                if (p.usuarioID == usuarioID)
+                if (p.ID == usuarioActual.misPosts.Count)
                 {
                     return 8;
                 }
@@ -342,7 +344,33 @@ namespace tp1_grupo6.Logica
 
         }
 
+        public bool eliminarPost(int Id)
+        {
+            //primero me aseguro que lo pueda agregar a la base
+            if (DB.eliminarPost(Id) == 1)
+            {
+                try
+                {
+                    //Ahora sí lo elimino en la lista
+                    for (int i = 0; i < posts.Count; i++)
+                    {
+                        if (posts[i].ID == Id)
+                            posts.RemoveAt(i);
+                    }
 
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
+            }
+        }
 
         // no se si funcionan
         /*

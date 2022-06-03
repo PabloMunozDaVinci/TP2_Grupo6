@@ -116,8 +116,8 @@ namespace tp1_grupo6.Front
                 string contenido;
 
                 contenido = textBox4.Text;
-
-                if (miRed.modificarPost(miRed.obtenerPostID(), miRed.usuarioActual.ID, contenido, now))
+             
+                if (miRed.modificarPost(miRed.idNuevoPost, miRed.usuarioActual.ID, contenido, now))
                 {
                     MessageBox.Show("Modificado con éxito");
                 }
@@ -136,6 +136,21 @@ namespace tp1_grupo6.Front
 
 
 
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+
+            if (miRed.eliminarPost(miRed.usuarioActual.misPosts.Count))
+            {
+                MessageBox.Show("Modificado con éxito");
+            }
+            else
+            {
+                MessageBox.Show("No se pudo el post");
+            }
+
+            textBox4.Text = "";
         }
     }
 }

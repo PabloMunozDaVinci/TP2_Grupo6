@@ -286,6 +286,7 @@ namespace tp1_grupo6.Logica
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
                     idNuevoUsuario = reader.GetInt32(0);
+                
                     reader.Close();
                 }
                 catch (Exception ex)
@@ -328,12 +329,13 @@ namespace tp1_grupo6.Logica
                     resultadoQuery = command.ExecuteNonQuery();
 
                
-                    string ConsultaID = "SELECT MAX([Post.PostID]) FROM [dbo].[Post]";
+                    string ConsultaID = "SELECT MAX([PostID]) FROM [dbo].[Post]";
                     command = new SqlCommand(queryInsertPost, connectionDB);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
                     idNuevoPost = reader.GetInt32(0);
                     reader.Close();
+                
                 }
                 catch (Exception ex)
                 {
@@ -384,7 +386,29 @@ namespace tp1_grupo6.Logica
         }
 
 
-
+        public int eliminarPost(int PostID)
+        {
+            string connectionString = Properties.Resources.connectionString;
+            string queryDeletePost = "DELETE FROM [dbo].[Post] WHERE PostID=@postid";
+            using (SqlConnection connectionDB =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryDeletePost, connectionDB);
+                command.Parameters.Add(new SqlParameter("@postid", SqlDbType.Int));
+                command.Parameters["@postid"].Value = PostID;
+                try
+                {
+                    connectionDB.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
 
 
 
