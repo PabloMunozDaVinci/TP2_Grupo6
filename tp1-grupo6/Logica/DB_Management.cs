@@ -549,7 +549,47 @@ namespace tp1_grupo6.Logica
 
 
 
+        public int modificarComentario(int ID,int PostID ,int UsuarioID, string Contenido)
+        {
+            string connectionString = Properties.Resources.connectionString;
+            string queryUpdateComentario = "UPDATE [dbo].[Comentario] SET Contenido=@contenido, Fecha=GETDATE() WHERE PostID=@postid AND UsuarioID=@usuarioid AND ComentarioID=@comentarioid;";
+            using (SqlConnection connectionDB =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryUpdateComentario, connectionDB);
+        
+                command.Parameters.Add(new SqlParameter("@contenido", SqlDbType.VarChar));
 
+                command.Parameters["@contenido"].Value = Contenido;
+
+
+                command.Parameters.Add(new SqlParameter("@postid", SqlDbType.Int));
+
+                command.Parameters["@contenido"].Value = PostID;
+
+
+                command.Parameters.Add(new SqlParameter("@comentarioid", SqlDbType.Int));
+
+                command.Parameters["@contenido"].Value = ID;
+                command.Parameters.Add(new SqlParameter("@contenido", SqlDbType.Int));
+
+                command.Parameters["@contenido"].Value = Contenido;
+                try
+                {
+
+
+
+                    connectionDB.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
 
     }
 }

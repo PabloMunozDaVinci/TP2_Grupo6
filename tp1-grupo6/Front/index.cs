@@ -130,7 +130,7 @@ namespace tp1_grupo6.Front
             }
             else
             {
-                MessageBox.Show("No se pudo el post");
+                MessageBox.Show("No se pudo eliminar el post");
             }
             textBox4.Text = "";
         }
@@ -162,6 +162,30 @@ namespace tp1_grupo6.Front
 
 
             }
+
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+            DateTime now = DateTime.Now;
+            if (miRed.usuarioActual != null)
+            {
+                string contenido;
+                contenido = textBox6.Text;
+                if (miRed.ModificarComentario(miRed.ObtenerComentarioID(), miRed.usuarioActual.ID, miRed.ObtenerPostID(),contenido, now))
+                {
+                    MessageBox.Show("Modificado con éxito");
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo el post");
+                }
+                textBox5.Text = contenido;
+                textBox6.Text = "";
+            }
+
 
 
         }

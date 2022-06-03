@@ -36,6 +36,7 @@ namespace tp1_grupo6.Logica
         {
             usuarios = DB.inicializarUsuarios();
             posts = DB.inicializarPost();
+            comentarios = DB.inicializarComentario();
         }
 
         //Metodo para hacer el hashing de la contraseña
@@ -356,7 +357,41 @@ namespace tp1_grupo6.Logica
             }
             return contenido;
         }
-        
+
+
+        public int ObtenerComentarioID()
+        {
+            return usuarioActual.misComentarios[usuarioActual.misComentarios.Count - 1].ID;
+        }
+
+        public bool ModificarComentario(int ID, int usuarioID,int postID, string newContenido, DateTime newFecha)
+        {
+            int a = DB.modificarComentario(ID, ObtenerPostID(), usuarioID, newContenido);
+            if (a == 1)
+            {
+                try
+                {
+                    //Ahora sí lo MODIFICO en la lista
+                    for (int i = 0; i <= comentarios.Count - 1; i++)
+                        if (comentarios[i].ID == ID)
+                        {
+                            comentarios[i].Contenido = newContenido;
+                            comentarios[i].fecha = newFecha;
+                        }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
+            }
+
+        }
 
         /*
 
@@ -385,7 +420,7 @@ namespace tp1_grupo6.Logica
         } 
         
          */
-        
+
         //No productiva 
         /*public void QuitarComentario(Post p, Comentario c)
         {
@@ -419,7 +454,7 @@ namespace tp1_grupo6.Logica
                 }
             }
         }*/
-        
+
         public void Reaccionar(Post p, Reaccion r)
         {
 
