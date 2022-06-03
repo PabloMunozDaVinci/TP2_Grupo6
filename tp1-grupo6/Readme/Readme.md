@@ -13,7 +13,11 @@ Acto seguido de registrarse , lo llevara nuevamente al login , donde con los dat
 
 *Usted estara entonces en el index de la red social vera su nombre de usuario en sistema y podra generar un Post.
 *Para generar un post debera escribir el contenido donde dice " que esta pensando" al dar en el boton de crear
-el post se vera reflejado en la parte de abajo donde luego podra eliminarlo y actualizarlo.
+el post se vera reflejado en la parte de abajo donde luego podra eliminarlo y actualizarlo con sus respectivos botones
+*Podra realizar Comentarios sobre ese post yendo al ultimo textbox de la pagina , escribiendo su comentario y
+dandole al boton comentar.
+El comentario se eañadira al textbox inferior al post por el cual se quiere comentar.
+
 
 
 										Explicacion de codigo

@@ -12,6 +12,7 @@ namespace tp1_grupo6.Logica
         public int idNuevoPost { get; set; }
         private List<Usuario> usuarios;
         private List<Post> posts;
+        private List<Comentario> comentarios;
         private List<Tag> tags;
         public Usuario usuarioActual { get; set; }
         public IDictionary<string, int> loginHistory;
@@ -22,6 +23,7 @@ namespace tp1_grupo6.Logica
         {
             usuarios = new List<Usuario>();
             posts = new List<Post>();
+            comentarios = new List<Comentario>();
             tags = new List<Tag>();
             this.usuarioActual = usuarioActual;
             this.loginHistory = new Dictionary<string, int>();
@@ -34,6 +36,7 @@ namespace tp1_grupo6.Logica
         {
             usuarios = DB.inicializarUsuarios();
             posts = DB.inicializarPost();
+            comentarios = DB.inicializarComentario();
         }
 
         //Metodo para hacer el hashing de la contraseña
@@ -329,55 +332,69 @@ namespace tp1_grupo6.Logica
             }
         }
 
-        /* No productiva 
-        public void AgregarAmigo(Usuario amigo)
+        public string Comentar(int postID,int usuarioID, string contenido)
         {
+            DateTime now = DateTime.Now;
+
             if (usuarioActual != null)
             {
-
-                usuarioActual.Amigos.Add(amigo);
-
-            }
-
-            }*/
-
-        /* No productiva 
-        public void QuitarAmigo(Usuario exAmigo)
-        {
-            if (usuarioActual != null)
-            {
-                //usuarioActual.Amigos.Remove(amigo);
-                exAmigo.Amigos.Remove(usuarioActual);
-            }
-        }*/
-
-        /* No productiva 
-        public void Comentar(Post p, Comentario c)
-        {
-            //pregunto si el conteo de post es mayor a 0 para determinar si existen posts
-            if (posts.Count > 0)
-            {
-                bool encontre = false;
-                //registro el ID del post a guardar
-                int id = 0;
-                id = p.ID;
-                foreach (Post postAux in posts)
+                int idNuevoComentario;
+                idNuevoComentario = DB.agregarComentario(usuarioActual.ID,ObtenerPostID(), contenido);
+                if (idNuevoComentario != -1)
                 {
-                    if (postAux.ID == id)
-                    {
-                        encontre = true;
-                        //Agrego al Post actual el comentario
-                        postAux.Comentarios.Add(c);
-                        //al usuario actual le agrego a su lista el comentario que realizó
-                        usuarioActual.MisComentarios.Add(c);
-                        //si realiza mas comentarios deben tener ID  diferente
-                        //usuarioActual.MisComentarios.
-                    }
+                    //Ahora sí lo agrego en la lista
+                    Comentario nuevoComentario = new Comentario(idNuevoComentario,ObtenerPostID() ,usuarioActual.ID, contenido, now);
+                    comentarios.Add(nuevoComentario);
+                    usuarioActual.agregarComentarios(nuevoComentario);
+                  
+                }
+                else
+                {
+                    //algo salió mal con la query porque no generó un id válido
+                    Console.WriteLine("error en query");
+                }
+
+            }
+            return contenido;
+        }
+
+
+        public int ObtenerComentarioID()
+        {
+            return usuarioActual.misComentarios[usuarioActual.misComentarios.Count - 1].ID;
+        }
+
+        public bool ModificarComentario(int ID, int usuarioID,int postID, string newContenido, DateTime newFecha)
+        {
+            int a = DB.modificarComentario(ID, ObtenerPostID(), usuarioID, newContenido);
+            if (a == 1)
+            {
+                try
+                {
+                    //Ahora sí lo MODIFICO en la lista
+                    for (int i = 0; i <= comentarios.Count - 1; i++)
+                        if (comentarios[i].ID == ID)
+                        {
+                            comentarios[i].Contenido = newContenido;
+                            comentarios[i].fecha = newFecha;
+                        }
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
                 }
             }
-        }*/
+            else
+            {
+                //algo salió mal con la query porque no generó 1 registro
+                return false;
+            }
+
+        }
 
         /*
+
         public void ModificarComentario(Post p, Comentario c)
         {
             if (posts.Count > 0)
@@ -400,7 +417,9 @@ namespace tp1_grupo6.Logica
                     }
                 }
             }
-        }*/
+        } 
+        
+         */
 
         //No productiva 
         /*public void QuitarComentario(Post p, Comentario c)
