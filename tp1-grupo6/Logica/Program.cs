@@ -19,7 +19,7 @@ namespace tp1_grupo6
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             string[] argumentos = new string[1];
-            Application.Run(new Login(argumentos));
+            Application.Run(new Login());
         }
     }
 }

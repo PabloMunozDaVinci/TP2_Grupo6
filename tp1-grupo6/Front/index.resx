@@ -94,7 +94,7 @@
     <value>11, 83</value>
   </data>
   <data name="textBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>676, 24</value>
+    <value>675, 24</value>
   </data>
   <data name="textBox4.TabIndex" type="System.Int32, mscorlib">
     <value>34</value>
@@ -553,7 +553,7 @@
     <value>MiddleLeft</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 18</value>
+    <value>112, 18</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 18</value>
@@ -934,6 +934,9 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>1340, 826</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Index</value>

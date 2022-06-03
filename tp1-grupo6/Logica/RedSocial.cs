@@ -10,7 +10,7 @@ namespace tp1_grupo6.Logica
     public class RedSocial
     {
         public int idNuevoPost { get; set; }
-    private List<Usuario> usuarios;
+        private List<Usuario> usuarios;
         private List<Post> posts;
         private List<Tag> tags;
         public Usuario usuarioActual { get; set; }
@@ -176,7 +176,6 @@ namespace tp1_grupo6.Logica
             return false;
         }
 
-
         // Se autentica al Usuario.
         public bool IniciarUsuario(string Mail, string Password)
         {
@@ -189,6 +188,7 @@ namespace tp1_grupo6.Logica
             }
             return ok;
         }
+
         // Se valida si el usuario existe y devuelve true o false
         public bool ExisteUsuario(string Mail)
         {
@@ -238,44 +238,7 @@ namespace tp1_grupo6.Logica
             return true;
         }
 
-
-
-        /* no se si funciona
-        public void AgregarAmigo(Usuario amigo)
-        {
-            if (usuarioActual != null)
-            {
-
-                usuarioActual.Amigos.Add(amigo);
-
-            }
-
-        }*/
-
-
-
-
-
-
-
-
-
-        /* no funciona
-        public void QuitarAmigo(Usuario exAmigo)
-        {
-            if (usuarioActual != null)
-            {
-                //usuarioActual.Amigos.Remove(amigo);
-                exAmigo.Amigos.Remove(usuarioActual);
-            }
-        }*/
-
-
-
-
-
-
-
+        //Agrega el nuevo post a la BD, lo agrega a la lista, y devuelve un string con el contenido para mostrarlo en el Form
         public string Postear(int ID, string contenido)
          {
             DateTime now = DateTime.Now;
@@ -301,24 +264,17 @@ namespace tp1_grupo6.Logica
             }
              return contenido;
         }
-        // no funciona
-        public int obtenerPostID(int usuarioID)
+        //Trae el ultimo ID de la lista, aplicado para funcionar con lo que tenemos hasta ahora
+        public int ObtenerPostID()
         {
-            foreach (Post p in posts)
-            {
-                if (p.ID == usuarioActual.misPosts.Count)
-                {
-                    return 8;
-                }
-            }
-            return 0;
+            return usuarioActual.misPosts[usuarioActual.misPosts.Count - 1].ID;
         }
 
+        //Metodo para modificar un post, se actualiza en la BD y en la lista de posts
         public bool modificarPost(int ID, int usuarioID, string newContenido, DateTime newFecha)
         {
-
-
-            if (DB.modificarPost(ID, usuarioID, newContenido, newFecha) == 1)
+            int a = DB.modificarPost(ID, usuarioID, newContenido);
+            if (a == 1)
             {
                 try
                 {
@@ -344,6 +300,7 @@ namespace tp1_grupo6.Logica
 
         }
 
+        //
         public bool eliminarPost(int Id)
         {
             //primero me aseguro que lo pueda agregar a la base
@@ -372,100 +329,29 @@ namespace tp1_grupo6.Logica
             }
         }
 
-        // no se si funcionan
-        /*
-        public void Postear(Post p, List<Tag> t)
+        /* No productiva 
+        public void AgregarAmigo(Usuario amigo)
         {
-            bool encontre = false;
-
-            posts.Add(p);
-            usuarioActual.MisPosts.Add(p);
-            foreach (Tag tagP in t)
+            if (usuarioActual != null)
             {
-                encontre = false;
 
-                foreach (Tag tag in tags)
-                {
-                    if (tag == tagP)
-                    {
-                        encontre = true;
-                    }
-                }
-
-                if (encontre == false)
-                {
-                    tags.Add(tagP);
-                }
-
-                tagP.Posts.Add(p);
-                p.Tags.Add(tagP);
+                usuarioActual.Amigos.Add(amigo);
 
             }
-        }
 
-        */
+            }*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /* no funciona
-        public void ModificarPost(int pID, Usuario pUsuario, string pContenido, List<Comentario> pComentarios, List<Reaccion> pReacciones, List<Tag> pTags, DateTime pFecha)
+        /* No productiva 
+        public void QuitarAmigo(Usuario exAmigo)
         {
-            foreach (Post post in posts)
+            if (usuarioActual != null)
             {
-                if (post.ID == pID)
-                {
-                    //post.Usuario = pUsuario;
-                    post.Contenido = pContenido;
-                    post.Comentarios = pComentarios;
-                    post.Reacciones = pReacciones;
-                    post.Tags = pTags;
-                    //post.Fecha = pFecha;
-
-                }
+                //usuarioActual.Amigos.Remove(amigo);
+                exAmigo.Amigos.Remove(usuarioActual);
             }
         }*/
 
-
-
-
-
-
-
-
-
-
-        // no hecho
-        public void EliminarPost(Post p)
-        {
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /* no funciona
+        /* No productiva 
         public void Comentar(Post p, Comentario c)
         {
             //pregunto si el conteo de post es mayor a 0 para determinar si existen posts
@@ -490,22 +376,6 @@ namespace tp1_grupo6.Logica
                 }
             }
         }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /*
         public void ModificarComentario(Post p, Comentario c)
@@ -532,26 +402,8 @@ namespace tp1_grupo6.Logica
             }
         }*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public void QuitarComentario(Post p, Comentario c)
+        //No productiva 
+        /*public void QuitarComentario(Post p, Comentario c)
         {
             {
                 if (posts.Count > 0)
@@ -582,21 +434,7 @@ namespace tp1_grupo6.Logica
                     }
                 }
             }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }*/
 
         public void Reaccionar(Post p, Reaccion r)
         {

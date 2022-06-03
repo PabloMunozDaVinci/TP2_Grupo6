@@ -330,7 +330,7 @@ namespace tp1_grupo6.Logica
 
                
                     string ConsultaID = "SELECT MAX([PostID]) FROM [dbo].[Post]";
-                    command = new SqlCommand(queryInsertPost, connectionDB);
+                    command = new SqlCommand(ConsultaID, connectionDB);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
                     idNuevoPost = reader.GetInt32(0);
@@ -459,22 +459,22 @@ namespace tp1_grupo6.Logica
         }
 
 
-        public int modificarPost(int ID, int UsuarioID, string Contenido, DateTime Fecha)
+        public int modificarPost(int ID, int UsuarioID, string Contenido)
         {
             string connectionString = Properties.Resources.connectionString;
-            string queryUpdatePost = "UPDATE [dbo].[Post] SET Contenido=@contenido, Fecha=GETDATE() WHERE PostID=@id AND UsuarioID=@usuarioid;";
+            string queryUpdatePost = "UPDATE [dbo].[Post] SET Contenido=@contenido, Fecha=GETDATE() WHERE PostID=@postid AND UsuarioID=@usuarioid;";
             using (SqlConnection connectionDB =
                 new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryUpdatePost, connectionDB);
                 command.Parameters.Add(new SqlParameter("@postid", SqlDbType.Int));
-                command.Parameters.Add(new SqlParameter("@usuadioid", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@usuarioid", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@contenido", SqlDbType.VarChar));
-                command.Parameters.Add(new SqlParameter("@fecha", SqlDbType.DateTime));
+
                 command.Parameters["@postid"].Value = ID;
-                command.Parameters["@usuadioid"].Value = UsuarioID;
+                command.Parameters["@usuarioid"].Value = UsuarioID;
                 command.Parameters["@contenido"].Value = Contenido;
-                command.Parameters["@fecha"].Value = Fecha;
+
 
                 try
                 {

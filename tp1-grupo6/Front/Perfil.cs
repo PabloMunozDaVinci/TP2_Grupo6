@@ -18,11 +18,16 @@ namespace tp1_grupo6.Front
             this.miRed = miRed;
             InitializeComponent();
             label7.Text = miRed.usuarioActual.ID.ToString();
+            label1.Text = miRed.usuarioActual.Nombre;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             miRed.CerrarSesion();
+            Form login = new Login();
+            this.Hide();
+            login.ShowDialog();
+            this.Show();
             Dispose();
         }
 

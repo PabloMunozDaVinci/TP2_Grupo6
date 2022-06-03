@@ -18,7 +18,7 @@ namespace tp1_grupo6.Front
             this.miRed = miRed;
             InitializeComponent();
             //textBox5.Text = miRed.usuarioActual.Nombre;
-            label1.Text = "Bienvenido " + miRed.usuarioActual.Nombre;
+            label1.Text = miRed.usuarioActual.Nombre;
 
         }
 
@@ -85,8 +85,6 @@ namespace tp1_grupo6.Front
                 miRed.Postear(miRed.usuarioActual.ID, contenido);
 
                 textBox4.Text = contenido;
-
-
             }
 
 
@@ -107,17 +105,12 @@ namespace tp1_grupo6.Front
 
         private void button3_Click(object sender, EventArgs e)
         {
-
-
-
             DateTime now = DateTime.Now;
             if (miRed.usuarioActual != null)
             {
                 string contenido;
-
                 contenido = textBox4.Text;
-             
-                if (miRed.modificarPost(miRed.idNuevoPost, miRed.usuarioActual.ID, contenido, now))
+                if (miRed.modificarPost(miRed.ObtenerPostID(), miRed.usuarioActual.ID, contenido, now))
                 {
                     MessageBox.Show("Modificado con éxito");
                 }
@@ -125,31 +118,22 @@ namespace tp1_grupo6.Front
                 {
                     MessageBox.Show("No se pudo el post");
                 }
-
-
                 textBox4.Text = contenido;
                 textBox1.Text = "";
             }
-
-
-
-
-
-
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-
-            if (miRed.eliminarPost(miRed.usuarioActual.misPosts.Count))
+            if (miRed.eliminarPost(miRed.ObtenerPostID()))
             {
                 MessageBox.Show("Modificado con éxito");
+
             }
             else
             {
                 MessageBox.Show("No se pudo el post");
             }
-
             textBox4.Text = "";
         }
     }
