@@ -250,10 +250,10 @@ namespace tp1_grupo6.Logica
                 if (idNuevoPost != -1)
                 {
                     //Ahora sí lo agrego en la lista
-                    Post nuevoPost = new Post(idNuevoPost, usuarioActual.ID, contenido, now);
+                    Post nuevoPost = new Post(idNuevoPost, usuarioActual.ID, contenido, now);      
                     posts.Add(nuevoPost);
-                    usuarioActual.misPosts.Add(nuevoPost);
-                   this.idNuevoPost = idNuevoPost;
+                    usuarioActual.agregarPosts(nuevoPost);
+                    this.idNuevoPost = idNuevoPost;
                 }
                 else
                 {
