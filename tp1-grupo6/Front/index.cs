@@ -114,7 +114,7 @@ namespace tp1_grupo6.Front
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo el post");
+                    MessageBox.Show("No se pudo modificar el post");
                 }
                 textBox4.Text = contenido;
                 textBox1.Text = "";
@@ -180,7 +180,7 @@ namespace tp1_grupo6.Front
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo el post");
+                    MessageBox.Show("No se pudo modificar el comentario");
                 }
                 textBox5.Text = contenido;
                 textBox6.Text = "";
