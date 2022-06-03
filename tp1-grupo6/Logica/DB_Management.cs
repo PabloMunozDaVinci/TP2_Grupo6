@@ -90,7 +90,7 @@ namespace tp1_grupo6.Logica
                     while (reader.Read())
                     {
                         // revisar como agregar un usuario ya que tenemos lista de usuario , como linkear eso
-                        auxC = new Comentario(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4)) ;
+                        auxC = new Comentario(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetString(3), reader.GetDateTime(4)) ;
                         misComentarios.Add(auxC);
 
                     }
@@ -345,9 +345,61 @@ namespace tp1_grupo6.Logica
                 return idNuevoPost;
 
             }
-        } 
+        }
 
 
+        public int agregarComentario(int usuarioid,int postid, string contenido)
+        {
+
+            int resultadoQuery;
+            int idNuevoComentario = -1;
+
+
+            string connectionString = Properties.Resources.connectionString;
+            string queryInsertComentario = "INSERT INTO [dbo].[Comentario] ([PostID],[UsuarioID],[Contenido],[Fecha]) VALUES (@postid,@usuarioid,@contenido,GETDATE());";
+
+            using (SqlConnection connectionDB =
+             new SqlConnection(connectionString))
+            {
+
+                SqlCommand command = new SqlCommand(queryInsertComentario, connectionDB);
+
+                command.Parameters.Add(new SqlParameter("@PostID", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@UsuarioID", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@Contenido", SqlDbType.VarChar));
+             //   command.Parameters.Add(new SqlParameter("@Fecha", SqlDbType.DateTime));
+
+
+                command.Parameters["@postid"].Value = postid;
+                command.Parameters["@usuarioid"].Value = usuarioid;
+                command.Parameters["@contenido"].Value = contenido;
+              //  command.Parameters["@fecha"].Value = fecha;
+
+
+                try
+                {
+                    connectionDB.Open();
+
+                    resultadoQuery = command.ExecuteNonQuery();
+
+
+                    string ConsultaID = "SELECT MAX([ComentarioID]) FROM [dbo].[Comentario]";
+                    command = new SqlCommand(ConsultaID, connectionDB);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    idNuevoComentario = reader.GetInt32(0);
+                    reader.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNuevoComentario;
+
+            }
+        }
 
 
 

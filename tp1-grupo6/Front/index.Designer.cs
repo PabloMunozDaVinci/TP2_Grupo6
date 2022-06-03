@@ -35,6 +35,7 @@ namespace tp1_grupo6.Front
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
@@ -64,6 +65,7 @@ namespace tp1_grupo6.Front
             this.button4 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.panel7.SuspendLayout();
@@ -108,17 +110,25 @@ namespace tp1_grupo6.Front
             // 
             // panel8
             // 
+            this.panel8.Controls.Add(this.textBox6);
+            this.panel8.Controls.Add(this.textBox5);
             this.panel8.Controls.Add(this.textBox4);
             this.panel8.Controls.Add(this.button3);
             this.panel8.Controls.Add(this.button10);
-            this.panel8.Controls.Add(this.button14);
-            this.panel8.Controls.Add(this.button13);
             this.panel8.Controls.Add(this.button12);
             this.panel8.Controls.Add(this.button11);
+            this.panel8.Controls.Add(this.button14);
+            this.panel8.Controls.Add(this.button13);
             this.panel8.Controls.Add(this.listView3);
             this.panel8.Controls.Add(this.listView2);
             resources.ApplyResources(this.panel8, "panel8");
             this.panel8.Name = "panel8";
+            // 
+            // textBox5
+            // 
+            resources.ApplyResources(this.textBox5, "textBox5");
+            this.textBox5.Name = "textBox5";
+            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // textBox4
             // 
@@ -154,6 +164,7 @@ namespace tp1_grupo6.Front
             resources.ApplyResources(this.button14, "button14");
             this.button14.Name = "button14";
             this.button14.UseVisualStyleBackColor = false;
+            this.button14.Click += new System.EventHandler(this.button14_Click_1);
             // 
             // button13
             // 
@@ -357,6 +368,11 @@ namespace tp1_grupo6.Front
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.TabStop = false;
             // 
+            // textBox6
+            // 
+            resources.ApplyResources(this.textBox6, "textBox6");
+            this.textBox6.Name = "textBox6";
+            // 
             // Index
             // 
             resources.ApplyResources(this, "$this");
@@ -419,5 +435,7 @@ namespace tp1_grupo6.Front
         private ListView listView3;
         private ListView listView2;
         private TextBox textBox4;
+        private TextBox textBox5;
+        private TextBox textBox6;
     }
 }

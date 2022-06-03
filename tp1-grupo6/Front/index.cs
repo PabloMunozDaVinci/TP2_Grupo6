@@ -80,8 +80,6 @@ namespace tp1_grupo6.Front
 
                 contenido = textBox1.Text;
 
-                Console.WriteLine(contenido);
-
                 miRed.Postear(miRed.usuarioActual.ID, contenido);
 
                 textBox4.Text = contenido;
@@ -135,6 +133,37 @@ namespace tp1_grupo6.Front
                 MessageBox.Show("No se pudo el post");
             }
             textBox4.Text = "";
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button14_Click_1(object sender, EventArgs e)
+        {
+
+
+
+            if (miRed.usuarioActual != null)
+            {
+
+                string contenido;
+
+                contenido = textBox6.Text;
+
+
+                miRed.Comentar(miRed.ObtenerPostID(), miRed.usuarioActual.ID, contenido);
+
+                    
+                textBox5.Text = contenido;
+
+                textBox6.Text = "";
+
+
+            }
+
+
         }
     }
 }
